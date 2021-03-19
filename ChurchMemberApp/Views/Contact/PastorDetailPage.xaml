@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChurchMemberApp.Views.Contact.PastorDetailPage" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="20,25,20,5" Spacing="20">
+            <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="Black" VerticalOptions="Start" VerticalTextAlignment="Start">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <StackLayout Orientation="Horizontal" Spacing="20">
+                <Frame CornerRadius="20" IsClippedToBounds="True" Padding="0" WidthRequest="120" HeightRequest="80" VerticalOptions="Start">
+                    <Image Source="http://assets.stickpng.com/images/585e4bcdcb11b227491c3396.png" Aspect="AspectFit" />
+                </Frame>
+                <StackLayout VerticalOptions="Center">
+                    <Label Text="{Binding Pastor.name}" FontFamily="MediumFont" TextColor="Black" />
+                    <Label Text="{Binding Pastor.branch}" FontFamily="MediumFont" TextColor="Black" />
+                    <Label Text="{Binding Pastor.level}" FontFamily="LightFont" TextColor="{DynamicResource DangerColor}" />
+
+                    <CollectionView ItemsSource="{Binding Socials}" Margin="0,15,0,0" SelectedItem="SelectedPastor" SelectionChanged="CollectionView_SelectionChanged" SelectionMode="Single" HeightRequest="120">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
+                                    <Label Text="{Binding name}" FontFamily="MaterialIcons" TextColor="Black" />
+                                   <!-- <Label Text="&#x000f020c;" FontFamily="MaterialIcons" TextColor="Black" />
+                                    <Label Text="&#x000f0544;" FontFamily="MaterialIcons" TextColor="Black" />
+                                    <Label Text="&#x000f02fe;" FontFamily="MaterialIcons" TextColor="Black" />-->
+                                </StackLayout>
+                                
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+
+                    
+                </StackLayout>
+            </StackLayout>
+
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="30">
+                        <Label Text="&#x000f03f2;" TextColor="{DynamicResource DarkColor}" FontSize="24" FontFamily="MaterialIcons" />
+                        <Label Text="{Binding Pastor.phone}" FontFamily="LightFont" FontSize="14" />
+                    </StackLayout>
+                    <Label Text="About" TextColor="{DynamicResource DarkColor}" FontSize="18" FontFamily="BoldFont" />
+                    <Label Text="{Binding Pastor.bio}" TextColor="Black" FontSize="14" FontFamily="LightFont" />
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

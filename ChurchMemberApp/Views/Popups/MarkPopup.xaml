@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg:PopupPage  xmlns:rg="http://rotorgames.com" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+               x:Class="ChurchMemberApp.Views.Popups.MarkPopup">
+    <rg:PopupPage.Animation>
+        <rg:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.1"
+            ScaleOut="1.5"
+            DurationIn="300"
+            DurationOut="250"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </rg:PopupPage.Animation>
+
+    <Frame BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="15" CornerRadius="20">
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20" >
+
+
+            <forms:AnimationView
+                x:Name="animationView"
+                Animation="https://assets1.lottiefiles.com/packages/lf20_rSH8or.json"
+                AnimationSource="Url"
+                RepeatCount="10"
+                RepeatMode="Restart"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand" />
+
+        </StackLayout>
+    </Frame>
+
+</rg:PopupPage>

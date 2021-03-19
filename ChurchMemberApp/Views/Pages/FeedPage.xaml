@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:converter="clr-namespace:ChurchMemberApp.Converters"
+             xmlns:sk="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton" xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             ios:Page.UseSafeArea="True" x:Class="ChurchMemberApp.Views.Pages.FeedPage" NavigationPage.HasNavigationBar="False" x:Name="Page">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <FontImage x:Key="MoreIcon" FontFamily="FontIcon" Glyph='&#xf141;' Size="20" Color="Black" />
+            <converter:RelativeDateTimeConvertor x:Key="RelativeDateTimeConvertor"/>
+            <RoundRectangleGeometry x:Key="roundedImg" CornerRadius="8" Rect="0,0,44,44"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <!--<StackLayout HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="CenterAndExpand" x:Name="empty" >
+                <lottie:AnimationView AutoPlay="True" x:Name="ani"  Animation="notfound.json" RepeatCount="10" RepeatMode="Restart" WidthRequest="150" HeightRequest="150"/>
+                <Label Text="No Feed Yet!" HorizontalOptions="Center" TextColor="Black" />
+            </StackLayout>-->
+            <Grid RowDefinitions="Auto,*,Auto">
+                    
+                <Grid BackgroundColor="#FFFFFF" Padding="15,3" Margin="0,10,0,20">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="20">
+                        <Frame CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0" IsClippedToBounds="True" VerticalOptions="Start" HasShadow="False">
+                                <Image Source="start.png" Aspect="Fill" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="UIChange_Tapped" />
+                            </Frame.GestureRecognizers>
+                            </Frame>
+
+                        <Frame Grid.Column="1" BackgroundColor="#eee" BorderColor="LightGray" CornerRadius="20" HeightRequest="20" Padding="15,0" HasShadow="False">
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label VerticalOptions="Center" Text="&#xf002;" FontFamily="FontIcon" FontAttributes="Bold"/>
+                                <Entry Placeholder="Search" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" />
+
+                            </StackLayout>
+                        </Frame> 
+                        
+                    </Grid>
+                </Grid>
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="True" WidthRequest="25" HeightRequest="25" Color="Orange" VerticalOptions="Center" HorizontalOptions="Center" />
+                <ScrollView Grid.Row="1">
+                    <!--<RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">-->
+                        <CollectionView ItemsSource="{Binding Feeds}" SelectedItem="{Binding SelectFeed}"
+                                    sk:Skeleton.IsBusy="True" sk:Skeleton.IsParent="True" sk:Skeleton.Animation="{sk:DefaultAnimation Fade}" SelectionChanged="TransCollectionView_SelectionChanged"   x:Name="TransCollectionView" SelectionMode="Single" >
+                            <CollectionView.EmptyView>
+                                <StackLayout>
+                                    <lottie:AnimationView AutoPlay="True"  Animation="notfound.json" RepeatCount="200" RepeatMode="Restart" WidthRequest="150" HeightRequest="150"/>
+                                    <Label Text="No Post yet" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </CollectionView.EmptyView>
+                            
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout BackgroundColor="#F3F3F3">
+                                        <!--<Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="5">-->
+                                    <StackLayout BackgroundColor="{AppThemeBinding Light=White, Dark=Black}" Margin="0,5">
+                                            <Grid ColumnDefinitions="Auto,*,Auto" Margin="15,10" ColumnSpacing="10" >
+                                                <Frame CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0" IsClippedToBounds="True" VerticalOptions="Start" BorderColor="{DynamicResource PrimaryColor}">
+                                                    <ffimageloading:CachedImage Source="{Binding postCategoryImage}" Aspect="Fill"  />
+                                                </Frame>
+
+                                                <StackLayout Spacing="5" VerticalOptions="Center" Grid.Column="1">
+                                                <Label Text="{Binding postCategoryName}" FontFamily="BoldFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" />
+                                                <Label FontSize="14" FontFamily="LightFont" Text="{Binding date,Converter={StaticResource RelativeDateTimeConvertor}}" TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                                                </StackLayout>
+                                            </Grid>
+
+                                            <ffimageloading:CachedImage Source="{Binding mediaUrl}" Aspect="Fill" HeightRequest="200" />
+
+                                        <StackLayout Grid.Column="1" HorizontalOptions="Start" Margin="20,10,20,10" Spacing="20" Orientation="Horizontal">
+                                            <StackLayout Orientation="Horizontal" Spacing="5">
+
+                                                <Label x:Name="toggle" FontFamily="FontIcon" Text="&#xf004;" TextColor="{Binding likeColor}" FontSize="18" VerticalTextAlignment="Center"
+                                                                touch:TouchEff.PressedAnimationDuration="800"
+                                                                touch:TouchEff.RegularAnimationDuration="800"
+                                                                touch:TouchEff.PressedScale="0.6"
+                                                                touch:TouchEff.PressedOpacity="0.8"
+                                                                touch:TouchEff.RippleCount="-1"
+                                                                                                 >
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={x:Reference TransCollectionView}, Path=BindingContext.LikedCommand}" CommandParameter="{Binding Source={x:Reference toggle}, Path=BindingContext}"  />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+
+                                                <Label Text="{Binding likeCount}" FontFamily="MediumFont" VerticalTextAlignment="Center" FontSize="12" />
+                                            </StackLayout>
+                                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                                <Label FontFamily="FontIcon" Text="&#xf075;" FontSize="18" TextColor="Gray" VerticalTextAlignment="Center" />
+                                                <Label Text="{Binding CommentCount}" FontFamily="MediumFont" FontSize="12" VerticalTextAlignment="Center"/>
+                                            </StackLayout>
+
+                                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                                <Label FontFamily="FontIcon" Text="&#xf064;" FontSize="18" TextColor="Gray" VerticalTextAlignment="Center">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer x:Name="share" Command="{Binding Source={x:Reference TransCollectionView}, Path=BindingContext.ShareCommand}" CommandParameter="{Binding Source={x:Reference toggle}, Path=BindingContext}" />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                                <Label Text="{Binding shareCount}" FontFamily="MediumFont" VerticalTextAlignment="Center" FontSize="12" />
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                        <StackLayout Margin="20,3,20,20">
+                                            <Label Text="{Binding title}" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="LightFont" FontSize="14" MaxLines="1" LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding content}" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="LightFont" FontSize="14" MaxLines="3" LineBreakMode="TailTruncation"
+                                               sk:Skeleton.IsBusy="{Binding IsBusy}"
+	                                            sk:Skeleton.BackgroundColor="#c6c6c5"/>
+                                        </StackLayout>
+                                        </StackLayout>
+                                        
+                                        
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+
+                        </CollectionView>
+                    <!--</RefreshView>-->
+                </ScrollView>
+
+                
+
+                <!--footer here-->
+                <!--<mi:MenuTabView Grid.Row="2" />-->
+                
+                <!--footer here-->
+                
+            </Grid>
+
+            <xct:AvatarView HeightRequest="80" WidthRequest="80" HorizontalOptions="End" FontFamily="MaterialIcons" Text="&#x000f0415;" VerticalOptions="EndAndExpand" Margin="0,0,20,20" Color="{DynamicResource DangerColor}" TextColor="White">
+                <xct:AvatarView.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="createPost" Tapped="createPost_Tapped" />
+                </xct:AvatarView.GestureRecognizers>
+            </xct:AvatarView>
+        </Grid>
+        
+    </ContentPage.Content> 
+</ContentPage>
+

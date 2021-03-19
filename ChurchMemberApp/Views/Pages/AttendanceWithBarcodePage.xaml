@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<zxing:ZXingScannerPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             x:Class="ChurchMemberApp.Views.Pages.AttendanceWithBarcodePage" NavigationPage.HasNavigationBar="False" OnScanResult="scanView_OnScanResult" IsScanning="true">
+    
+   
+        <!--<Grid VerticalOptions="CenterAndExpand"
+              HorizontalOptions="CenterAndExpand" BackgroundColor="#000">
+            <zxing:ZXingScannerView x:Name="scanView"
+                                        OnScanResult="scanView_OnScanResult"
+                                     IsTorchOn="True"
+                                     IsAnalyzing="True"
+                                    IsTabStop="True"
+                                        IsScanning="True"
+                                        WidthRequest="500"
+                                        HeightRequest="500"
+                                        VerticalOptions="CenterAndExpand"
+                                        HorizontalOptions="CenterAndExpand"/>
+            <zxing:ZXingDefaultOverlay TopText="Align the barcode within the frame"/>
+        </Grid>-->
+   
+</zxing:ZXingScannerPage>

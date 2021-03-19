@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:view="http://xamarin.com/schemas/2020/toolkit" x:Class="ChurchMemberApp.Views.Media.AudioView">
+    <ContentView.Content>
+        <StackLayout Margin="0,0,0,0" Spacing="0">
+            <Label Text="°" FontSize="24" VerticalOptions="Start" Margin="30,-7,0,0" TextColor="{DynamicResource PrimaryColor}" />
+        <ScrollView>
+        <StackLayout BackgroundColor="LightGray">
+            
+            <StackLayout BackgroundColor="White">
+                <Image Source="p1.jpg" Aspect="AspectFill" HeightRequest="180" />
+                <StackLayout Margin="10">
+                    <Label Text="Why the only future worth building includes everyone" TextColor="Black" FontFamily="BoldFont" FontSize="16"/>
+                    <Grid ColumnDefinitions="Auto,2*,*">
+                        <view:AvatarView Source="p1.jpg" Size="30" Text="AT" TextColor="White" VerticalOptions="Center" />
+                        <StackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="Rev. Sam Oye" TextColor="Gray" FontFamily="LightFont" VerticalOptions="Center" FontSize="12" />
+                            <Label TextColor="Gray" FontSize="12">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="&#xf017;" FontFamily="FontIcon" />
+                                        <Span Text=" " />
+                                        <Span Text="23:33" FontFamily="LightFont" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="2" Spacing="12" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                            <Label Text="&#xf004;" TextColor="Gray" FontFamily="FontIcon" />
+                            <Label Text="&#xf1e0;" TextColor="Gray" FontFamily="FontIcon" />
+                            <Label Text="&#xf142;" TextColor="Gray" FontFamily="FontIcon" />
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+
+
+            <StackLayout BackgroundColor="White">
+                <Image Source="p1.jpg" Aspect="AspectFill" HeightRequest="180" />
+                <StackLayout Margin="10">
+                    <Label Text="Why the only future worth building includes everyone" TextColor="Black" FontFamily="BoldFont" FontSize="16"/>
+                    <Grid ColumnDefinitions="Auto,2*,*">
+                        <view:AvatarView Source="p2.jpg" Size="60" Text="AT" TextColor="White" />
+                        <StackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="Rev. Sam Oye" TextColor="Gray" FontFamily="LightFont" VerticalOptions="Center" />
+                            <Label TextColor="Gray">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="&#xf017;" FontFamily="FontIcon" />
+                                        <Span Text=" " />
+                                        <Span Text="23:33" FontFamily="LightFont" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="2" Spacing="8" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                            <Label Text="&#xf004;" TextColor="Gray" FontFamily="FontIcon" />
+                            <Label Text="&#xf1e0;" TextColor="Gray" FontFamily="FontIcon" />
+                            <Label Text="&#xf142;" TextColor="Gray" FontFamily="FontIcon" />
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+            
+        </StackLayout>
+        </ScrollView>
+            </StackLayout>
+    </ContentView.Content>
+</ContentView>

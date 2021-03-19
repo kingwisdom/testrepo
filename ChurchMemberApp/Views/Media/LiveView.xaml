@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ChurchMemberApp.Views.Media.LiveView">
+    <ContentView.Content>
+        <StackLayout>
+            <BoxView WidthRequest="180" HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="End" />
+
+            <Label Text="Watch On Demand" FontFamily="BoldFont" FontSize="18" Margin="0,20,0,0" />
+            <Label Text="Join Us For Worship And Sermon" FontFamily="LightFont" FontSize="14" TextColor="Black" />
+
+            <Grid VerticalOptions="Start" Margin="0,20,0,0">
+                <Frame CornerRadius="20" Padding="0" WidthRequest="300" HeightRequest="200" IsClippedToBounds="True" HasShadow="False">
+                    <Image Source="https://dailypost.ng/wp-content/uploads/2020/05/David-Ibiyeomie.jpg" Aspect="Fill" /> 
+                </Frame>
+                <Frame BackgroundColor="{DynamicResource PrimaryColor}" CornerRadius="15" WidthRequest="60" HeightRequest="20" Margin="0,10,10,0" HorizontalOptions="End" VerticalOptions="Start" Padding="5">
+                        <Label Text="LIVE" FontFamily="LightFont" HorizontalOptions="Center" TextColor="White" />
+                </Frame>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto,*" Margin="0,20,0,0">
+                <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                    <Label TextColor="Black" Text="Faith that works" FontFamily="MediumFont" FontSize="18" LineBreakMode="WordWrap" />
+                    <Label Text="Pastor A.O Akinosun" TextColor="#F55A00" FontFamily="MediumFont" FontSize="14" />
+                </StackLayout>
+
+                <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Center">
+                    <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
+                        <Label Text="&#xf004;" FontFamily="FontIcon" TextColor="Red" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Frame>
+
+                    <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
+                        <Label Text="&#xf019;" FontFamily="FontIcon" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Frame>
+                </StackLayout>
+            </Grid>
+
+            <Label Text="Schedule" FontFamily="BoldFont" TextColor="Black" Margin="0,30,0,20" FontSize="20"/>
+            
+        </StackLayout>
+        
+    </ContentView.Content>
+</ContentView>

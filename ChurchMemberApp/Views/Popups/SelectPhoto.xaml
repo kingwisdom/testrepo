@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg:PopupPage  xmlns:rg="http://rotorgames.com" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChurchMemberApp.Views.Popups.SelectPhoto">
+    <rg:PopupPage.BackgroundColor>
+        <Color>
+            <x:Arguments>
+                <x:Double>0</x:Double>
+                <x:Double>0</x:Double>
+                <x:Double>0</x:Double>
+                <x:Double>0.7</x:Double>
+            </x:Arguments>
+        </Color>
+    </rg:PopupPage.BackgroundColor>
+
+    <rg:PopupPage.Animation>
+        <rg:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.1"
+            ScaleOut="1.5"
+            DurationIn="300"
+            DurationOut="250"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </rg:PopupPage.Animation>
+
+    <Frame Padding="30" BackgroundColor="White" WidthRequest="260" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="15">
+        
+        <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Spacing="15">
+            <StackLayout>
+                <Label FontSize="50" Text="&#x000f0104;" TextColor="#363636" FontFamily="MaterialIcons" HorizontalTextAlignment="Center" />
+                <Label FontSize="16" Text="Open Camera" TextColor="#363636" FontFamily="MediumFont" HorizontalTextAlignment="Center" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TakePicture}" NumberOfTapsRequired="1" x:Name="oc" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout>
+                <Label FontSize="50" Text="&#x000f02e9;" TextColor="#363636" FontFamily="MaterialIcons" HorizontalTextAlignment="Center" />
+                <Label FontSize="16" Text="Open Galery" TextColor="#363636" FontFamily="MediumFont" HorizontalTextAlignment="Center" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PickPicture}" NumberOfTapsRequired="1" x:Name="og" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+           
+        </StackLayout>
+            
+    </Frame>
+</rg:PopupPage>

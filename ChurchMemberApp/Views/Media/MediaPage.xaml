@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:view="clr-namespace:ChurchMemberApp.Views.Media" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" x:Class="ChurchMemberApp.Views.Media.MediaPage" NavigationPage.HasNavigationBar="False" xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"  xmlns:fonticons="clr-namespace:ChurchMemberApp.Helpers" xmlns:mi="clr-namespace:ChurchMemberApp.Views" ios:Page.UseSafeArea="True" x:Name="med">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <FontImage x:Key="AudioIcon" FontFamily="FontIcon" Glyph='&#xf144;' Size="20" Color="Black" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid BackgroundColor="#FFFFFF" Margin="20,15">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Media" FontFamily="BoldFont" FontSize="{StaticResource LargeSize}" TextColor="Black" VerticalOptions="Center" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Center" Spacing="20">
+                    <Label Grid.Column="1" Text="&#xf0f3;" FontFamily="FontIcon" FontAttributes="Bold"/>
+                    <Frame HeightRequest="30" WidthRequest="30" Padding="0" CornerRadius="15">
+                        <Image Source="start.png" Aspect="AspectFill" />
+                    </Frame>
+                </StackLayout>
+                
+            </Grid>
+        </Grid>
+        <xct:TabView Grid.Row="1" Margin="15,0" HorizontalOptions="Center">
+            <xct:TabViewItem Text="Sermon" HorizontalOptions="Center" FontFamily="MediumFont" Margin="10,0,0,10" FontAttributes="Bold" TextColorSelected="{DynamicResource PrimaryColor}" FontFamilySelected="BoldFont">
+                <xct:TabViewItem.FontSizeSelected>24</xct:TabViewItem.FontSizeSelected>
+                <xct:TabViewItem.Content>
+                    <view:SermonView />
+                </xct:TabViewItem.Content>
+            </xct:TabViewItem>
+
+            <xct:TabViewItem Text="Live" FontFamily="MediumFont" HorizontalOptions="Center" Margin="10,0,0,10" FontAttributes="Bold" TextColorSelected="{DynamicResource PrimaryColor}" FontFamilySelected="BoldFont" IsClippedToBounds="True">
+                <xct:TabViewItem.FontSizeSelected>24</xct:TabViewItem.FontSizeSelected>
+                <xct:TabViewItem.Content>
+                    <view:LiveView />
+                </xct:TabViewItem.Content>
+            </xct:TabViewItem>
+        </xct:TabView>
+
+        <!--<Grid
+            x:Name="gridFrames"
+            Grid.Row="2"
+            Padding="15,10"
+            BackgroundColor="#102733"
+            ColumnSpacing="20"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="Start">
+            <Frame
+                x:Name="frameHome"
+                Grid.Column="0"
+                BackgroundColor="#102733"
+                CornerRadius="{OnPlatform Android='30',
+                                          iOS='26'}"
+                HasShadow="False"
+                HorizontalOptions="FillAndExpand"
+                IsClippedToBounds="True"
+                StyleId="frameHome">
+                <Grid
+                    ColumnDefinitions="auto, auto"
+                    ColumnSpacing="10"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        x:Name="lbIconHome"
+                        Grid.Column="0"
+                        FontFamily="MaterialIcons"
+                        FontSize="24"
+                        HorizontalTextAlignment="Center"
+                        Text="{x:Static fonticons:FontIcons.Home}"
+                        TextColor="orange"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        x:Name="lbHome"
+                        Grid.Column="1"
+                        FontFamily="BoldBold"
+                        FontSize="12"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Home"
+                        TextColor="orange"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="home" Tapped="TapGestureRecognizer_Tapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            <Frame
+                x:Name="frameSearch"
+                Grid.Column="1"
+                BackgroundColor="#102733"
+                CornerRadius="{OnPlatform Android='30',
+                                          iOS='26'}"
+                HasShadow="False"
+                HorizontalOptions="FillAndExpand"
+                IsClippedToBounds="True"
+                StyleId="frameSearch">
+                <Grid
+                    ColumnDefinitions="auto, auto"
+                    ColumnSpacing="10"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                            x:Name="lbIconSearch"
+                            Grid.Column="0"
+                            FontFamily="MaterialIcons"
+                            FontSize="24"
+                            HorizontalTextAlignment="Center"
+                            Text="{x:Static fonticons:FontIcons.MusicCircle}"
+                            VerticalTextAlignment="Center" />
+                    <Label
+                        x:Name="lbSearch"
+                        Grid.Column="1"
+                        FontFamily="FontBold"
+                        FontSize="12"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="Media"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="media" Tapped="TapGestureRecognizer_Tapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            <Frame
+                x:Name="frameFavorite"
+                Grid.Column="2"
+                BackgroundColor="#102733"
+                CornerRadius="{OnPlatform Android='30',
+                                          iOS='26'}"
+                HasShadow="False"
+                HorizontalOptions="FillAndExpand"
+                IsClippedToBounds="True"
+                StyleId="frameFavorite">
+                <Grid
+                    ColumnDefinitions="auto, auto"
+                    ColumnSpacing="10"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        x:Name="lbIconFavorite"
+                        Grid.Column="0"
+                        FontFamily="MaterialIcons"
+                        FontSize="24"
+                        HorizontalTextAlignment="Center"
+                        Text="{x:Static fonticons:FontIcons.Cash}"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        x:Name="lbFavorite"
+                        Grid.Column="1"
+                        FontFamily="MuliBold"
+                        FontSize="12"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="Give"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="give" Tapped="TapGestureRecognizer_Tapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            --><!--Group chat--><!--
+            <Frame
+                x:Name="frameGroup"
+                Grid.Column="3"
+                BackgroundColor="#102733"
+                CornerRadius="{OnPlatform Android='30',
+                                          iOS='26'}"
+                HasShadow="False"
+                HorizontalOptions="FillAndExpand"
+                IsClippedToBounds="True"
+                StyleId="frameGroup">
+                <Grid
+                    ColumnDefinitions="auto, auto"
+                    ColumnSpacing="10"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        x:Name="lbIconGroup"
+                        Grid.Column="0"
+                        FontFamily="MaterialIcons"
+                        FontSize="24"
+                        HorizontalTextAlignment="Center"
+                        Text="{x:Static fonticons:FontIcons.Wechat}"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        x:Name="lbGroup"
+                        Grid.Column="1"
+                        FontFamily="FontBold"
+                        FontSize="12"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="Chat"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="group" Tapped="TapGestureRecognizer_Tapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            --><!--More--><!--
+            <Frame
+                x:Name="frameMore"
+                Grid.Column="4"
+                BackgroundColor="#102733"
+                CornerRadius="{OnPlatform Android='30',
+                                          iOS='26'}"
+                HasShadow="False"
+                HorizontalOptions="FillAndExpand"
+                IsClippedToBounds="True"
+                StyleId="frameMore">
+                <Grid
+                    ColumnDefinitions="auto, auto"
+                    ColumnSpacing="10"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        x:Name="lbIconMore"
+                        Grid.Column="0"
+                        FontFamily="MaterialIcons"
+                        FontSize="24"
+                        HorizontalTextAlignment="Center"
+                        Text="{x:Static fonticons:FontIcons.More}"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        x:Name="lbMore"
+                        Grid.Column="1"
+                        FontFamily="FontBold"
+                        FontSize="12"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="More"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="more" Tapped="TapGestureRecognizer_Tapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </Grid>-->
+        
+    </Grid>
+</ContentPage>

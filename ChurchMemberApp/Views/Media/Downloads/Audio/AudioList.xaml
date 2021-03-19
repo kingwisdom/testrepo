@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" NavigationPage.HasNavigationBar="False"
+             x:Class="ChurchMemberApp.Views.Media.Downloads.Audio.AudioList">
+    <ContentPage.Content>
+        <StackLayout Margin="0,16,0,0">
+            <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="Black" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <BoxView WidthRequest="180" HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="Start" />
+            <ScrollView>
+                <StackLayout>
+
+                    <Grid BackgroundColor="#FFFFFF" Margin="20,10,20,20">
+                        <Frame BackgroundColor="#eee" BorderColor="LightGray" CornerRadius="20" HeightRequest="40" Padding="15,2" HasShadow="False">
+                            <StackLayout Orientation="Horizontal">
+                                <Label VerticalOptions="Center" Text="&#xf002;" FontFamily="FontIcon" FontAttributes="Bold" Margin="0,0,10,0"/>
+                                <Entry Placeholder="Search" WidthRequest="280" HorizontalOptions="Center"  />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+
+
+                    <StackLayout Margin="20,0">
+
+
+                            <Label  Text="Downloads" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
+                            
+
+                        <CollectionView ItemsSource="{Binding AllAudio}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="audio" SelectionChanged="audio_SelectionChanged">
+                            <CollectionView.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label FontFamily="LightFont" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Empty messages" />
+                                </DataTemplate>
+                            </CollectionView.EmptyViewTemplate>
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout 
+                                    Orientation="Vertical" HorizontalItemSpacing="15" VerticalItemSpacing="15" Span="2" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid RowDefinitions="Auto,Auto,Auto">
+                                        <pv:PancakeView CornerRadius="20,20,20,20" WidthRequest="140" HeightRequest="130">
+                                            <ffimageloading:CachedImage  Source="{Binding imagePath}" Aspect="AspectFill"  />
+                                        </pv:PancakeView>
+                                        <Image Source="{Binding MediaIcon}" WidthRequest="20" HeightRequest="20" Margin="0,-40,0,0" HorizontalOptions="Start" />
+
+                                        <Label Grid.Row="1" Text="{Binding name}" TextColor="Black" FontFamily="MediumFont" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                        <Label Grid.Row="2" Text="{Binding category}" TextColor="#FF7A1F" FontFamily="MediumFont" Margin="10,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

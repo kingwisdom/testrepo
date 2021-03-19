@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="ChurchMemberApp.Views.Pages.ChatPage">
+    <ContentPage.Content>
+        <Grid BackgroundColor="White" Margin="15" RowDefinitions="Auto,*,Auto">
+            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="20" BackgroundColor="White">
+
+                <Label Text="&#xf0a8;" FontFamily="FontIcon" TextColor="Black" FontSize="20" />
+                <xct:AvatarView HeightRequest="30" WidthRequest="30" Source="http://assets.stickpng.com/images/585e4bcdcb11b227491c3396.png" Grid.Column="1" VerticalOptions="Start" />
+            </Grid>
+
+            <StackLayout Grid.Row="1" Margin="0,-40,0,0">
+            <ActivityIndicator Color="White" VerticalOptions="Center" WidthRequest="50" HeightRequest="50" IsRunning="True" x:Name="indicator" IsVisible="{Binding IsBusy}" />
+
+                <CollectionView x:Name="chat"  SelectionMode="Single" ItemsSource="{Binding Messages}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Spacing="15">
+                            <Frame CornerRadius="20" BorderColor="LightGray" BackgroundColor="White">
+                                <StackLayout>
+                                        <Label Text="{Binding SenderName}" TextColor="Black" FontFamily="BoldFont" FontSize="16" />
+                                    <Label Text="{Binding Text}" TextColor="Black" FontFamily="MediumFont" FontSize="14" />
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </StackLayout>
+
+           
+            <StackLayout Grid.Row="2" VerticalOptions="EndAndExpand" HeightRequest="60">
+                <pv:PancakeView BackgroundColor="White" CornerRadius="10,10,0,0">
+                    <pv:PancakeView.Shadow>
+                        <pv:DropShadow Color="Black" BlurRadius="10" Offset="0,0"/>
+                    </pv:PancakeView.Shadow>
+
+                    <Frame CornerRadius="10" HasShadow="False" Padding="0" BackgroundColor="#FEFEFE" HeightRequest="80">
+                        <Grid ColumnDefinitions="*,Auto" Margin="15,5">
+                            <Entry Placeholder="Add a comment" Text="{Binding Text}" FontFamily="LightFont" />
+                            <Label Text="&#xf1d8;" Grid.Column="1" TextColor="Black" FontFamily="FontIcon" VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SendMessageCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </Frame>
+                </pv:PancakeView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

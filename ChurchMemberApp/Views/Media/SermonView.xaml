@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" x:Class="ChurchMemberApp.Views.Media.SermonView">
+    <ContentView.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <StackLayout>
+            <BoxView WidthRequest="180" HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="Start" />
+            <ScrollView>
+                <StackLayout>
+                    
+                    <Grid BackgroundColor="#FFFFFF" Margin="0,10,0,20">
+                            <Frame BackgroundColor="#eee" BorderColor="LightGray" CornerRadius="20" HeightRequest="40" Padding="15,2" HasShadow="False">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label VerticalOptions="Center" Text="&#xf002;" FontFamily="FontIcon" FontAttributes="Bold" Margin="0,0,10,0"/>
+                                    <Entry Placeholder="Search" WidthRequest="280" HorizontalOptions="Center"  />
+                                </StackLayout>
+                            </Frame> 
+                    </Grid>
+
+
+                    <StackLayout>
+                        <Grid VerticalOptions="Start">
+                            <Frame CornerRadius="20" Padding="0" WidthRequest="300" HeightRequest="200" IsClippedToBounds="True" HasShadow="False">
+                                <ffimageloading:CachedImage  Source="{Binding CurrentMessage.imagePath}" Aspect="AspectFit" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="current" Tapped="current_Tapped"  />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                            <Frame BackgroundColor="{DynamicResource PrimaryColor}" CornerRadius="15" WidthRequest="60" HeightRequest="20" Margin="0,10,10,0" HorizontalOptions="End" VerticalOptions="Start" Padding="5">
+                                    <Label Text="New" FontFamily="LightFont" HorizontalOptions="Center" TextColor="White" />
+                            </Frame>
+                        </Grid>
+
+
+                        <Grid ColumnDefinitions="Auto,*" Margin="0,20">
+                            <Label  Text="Messages" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
+                            <Label Grid.Column="1" Text="See All" FontFamily="MediumFont" FontSize="16" HorizontalOptions="End" TextColor="{DynamicResource DangerColor}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SeeAllCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                        </Grid>
+
+                        <ActivityIndicator Color="Orange" WidthRequest="50" HeightRequest="50" IsRunning="True" IsVisible="{Binding IsBusy}" />
+
+                        <CollectionView ItemsSource="{Binding Audio}" HeightRequest="440" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="allfeeds" SelectionChanged="allfeeds_SelectionChanged">
+                            <CollectionView.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label FontFamily="LightFont" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Empty messagws" />
+                                </DataTemplate>
+                            </CollectionView.EmptyViewTemplate>
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout 
+                                    Orientation="Vertical" HorizontalItemSpacing="10" VerticalItemSpacing="10" Span="2" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid RowDefinitions="Auto,Auto,Auto">
+                                        <pv:PancakeView CornerRadius="20,20,20,20" WidthRequest="180" HeightRequest="150">
+                                            <ffimageloading:CachedImage  Source="{Binding imagePath}" Aspect="AspectFill"  />
+                                        </pv:PancakeView>
+                                        <Image Source="{Binding MediaIcon}" WidthRequest="20" HeightRequest="20" Margin="0,-40,0,0" HorizontalOptions="Start" />
+
+                                        <Label Grid.Row="1" Text="{Binding name}" TextColor="Black" FontFamily="MediumFont" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                        <Label Grid.Row="2" Text="{Binding category}" TextColor="#FF7A1F" FontFamily="MediumFont" Margin="10,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+
+                        <Grid ColumnDefinitions="Auto,*" Margin="0,20">
+                            <Label  Text="Video" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
+                            <Label Grid.Column="1" Text="See All" FontFamily="MediumFont" FontSize="16" HorizontalOptions="End" TextColor="{DynamicResource DangerColor}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SeeAllVideoCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        <ActivityIndicator Color="Orange" WidthRequest="50" HeightRequest="50" IsRunning="True" IsVisible="{Binding IsBusy}" />
+                        <CollectionView ItemsSource="{Binding Video}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="videofeeds" SelectionChanged="allfeeds_SelectionChanged">
+                            <CollectionView.EmptyView>
+                                <Label FontFamily="LightFont" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="No Videos Yet!" />
+                                
+                            </CollectionView.EmptyView>
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout 
+                                    Orientation="Vertical" HorizontalItemSpacing="10" VerticalItemSpacing="10" Span="2" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid RowDefinitions="Auto,Auto,Auto">
+                                        <pv:PancakeView CornerRadius="20,20,20,20" WidthRequest="180" HeightRequest="150">
+                                            <ffimageloading:CachedImage  Source="{Binding imagePath}" Aspect="AspectFill"  />
+                                        </pv:PancakeView>
+                                        <Image Source="{Binding MediaIcon}" WidthRequest="20" HeightRequest="20" Margin="0,-40,0,0" HorizontalOptions="Start" />
+
+                                        <Label Grid.Row="1" Text="{Binding name}" TextColor="Black" FontFamily="MediumFont" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                        <Label Grid.Row="2" Text="{Binding category}" TextColor="#FF7A1F" FontFamily="MediumFont" Margin="10,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+
+                    </StackLayout>
+               
+                </StackLayout>
+            </ScrollView>
+            
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

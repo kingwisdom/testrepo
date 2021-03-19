@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="ChurchMemberApp.Views.Media.MoreVideoPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <BoxView WidthRequest="180" HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="Start" />
+            <ScrollView>
+                <StackLayout>
+
+                    <Grid BackgroundColor="#FFFFFF" Margin="0,10,0,20">
+                        <Frame BackgroundColor="#eee" BorderColor="LightGray" CornerRadius="20" HeightRequest="40" Padding="15,2" HasShadow="False">
+                            <StackLayout Orientation="Horizontal">
+                                <Label VerticalOptions="Center" Text="&#xf002;" FontFamily="FontIcon" FontAttributes="Bold" Margin="0,0,10,0"/>
+                                <Entry Placeholder="Search" WidthRequest="280" HorizontalOptions="Center"  />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+
+
+                    <StackLayout>
+
+
+                        <Grid ColumnDefinitions="Auto,*" Margin="0,20">
+                            <Label  Text="Downloads" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
+                            <Label Grid.Column="1" Text="See All" FontFamily="MediumFont" FontSize="16" HorizontalOptions="End" TextColor="{DynamicResource DangerColor}">
+
+                            </Label>
+
+                        </Grid>
+
+                        <CollectionView ItemsSource="{Binding AllVideo}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="videofeeds" SelectionChanged="videofeeds_SelectionChanged">
+                            <CollectionView.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label FontFamily="LightFont" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Empty messagws" />
+                                </DataTemplate>
+                            </CollectionView.EmptyViewTemplate>
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout 
+                                    Orientation="Vertical" HorizontalItemSpacing="10" VerticalItemSpacing="10" Span="2" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid RowDefinitions="Auto,Auto,Auto">
+                                        <pv:PancakeView CornerRadius="20,20,20,20" WidthRequest="180" HeightRequest="150">
+                                            <ffimageloading:CachedImage  Source="{Binding imagePath}" Aspect="AspectFill"  />
+                                        </pv:PancakeView>
+                                        <Image Source="{Binding MediaIcon}" WidthRequest="20" HeightRequest="20" Margin="0,-40,0,0" HorizontalOptions="Start" />
+
+                                        <Label Grid.Row="1" Text="{Binding name}" TextColor="Black" FontFamily="MediumFont" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                        <Label Grid.Row="2" Text="{Binding category}" TextColor="#FF7A1F" FontFamily="MediumFont" Margin="10,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rg:PopupPage  xmlns:rg="http://rotorgames.com" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ChurchMemberApp.Views.Popups.MessageDialog">
+
+    <rg:PopupPage.BackgroundColor>
+        <Color>
+            <x:Arguments>
+                <x:Double>0</x:Double>
+                <x:Double>0</x:Double>
+                <x:Double>0</x:Double>
+                <x:Double>0.7</x:Double>
+            </x:Arguments>
+        </Color>
+    </rg:PopupPage.BackgroundColor>
+
+    <rg:PopupPage.Animation>
+        <rg:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.1"
+            ScaleOut="1.5"
+            DurationIn="300"
+            DurationOut="250"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </rg:PopupPage.Animation>
+
+    <Frame Padding="30" BackgroundColor="White" WidthRequest="260" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="15">
+        <Grid RowDefinitions="Auto,Auto" RowSpacing="40">
+            <StackLayout HorizontalOptions="Center" Spacing="15">
+                <Label x:Name="TitleTxt" TextColor="#2C2A57" FontFamily="MediumFont" HorizontalTextAlignment="Center" />
+                <Label x:Name="MessageTxt" FontSize="14" TextColor="#363636" FontFamily="NormalFont" HorizontalTextAlignment="Center" />
+            </StackLayout>
+            <StackLayout Spacing="5" Grid.Row="1">
+                <Button x:Name="okBtn" Text="Ok" TextColor="White" FontSize="14" FontFamily="NormalFont" BackgroundColor="{DynamicResource SecondaryColor}" WidthRequest="145" HeightRequest="40" CornerRadius="20" />
+                <Button x:Name="cancelBtn" Text="Cancel" TextColor="White" FontSize="14" FontFamily="NormalFont" BackgroundColor="{DynamicResource TertiaryColor}" WidthRequest="145" HeightRequest="40" CornerRadius="20" />
+            </StackLayout>
+        </Grid>
+    </Frame>
+</rg:PopupPage>

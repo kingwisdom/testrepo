@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" ios:Page.UseSafeArea="True" x:Class="ChurchMemberApp.Views.Giving.GivePage" NavigationPage.HasNavigationBar="False" x:Name="med" BackgroundColor="#FCFBFB" >
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,*" Margin="20,10">
+            <pv:PancakeView Grid.Row="0" BackgroundColor="#FFFFFF" CornerRadius="0,0,15,15" Padding="15" Margin="0,0,0,30">
+                <Label VerticalOptions="Start" TextColor="Black" FontFamily="BoldFont" Text="Giving" FontSize="28" />
+            </pv:PancakeView>
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Oft}" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="oft" SelectionChanged="oft_SelectionChanged">
+                <CollectionView.EmptyView>
+                    <Label Text="No payment options yet!" VerticalOptions="Center" FontSize="18" FontFamily="LightFont" HorizontalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#FFFFFF" BorderColor="#0D37451A" CornerRadius="20" Padding="15">
+                            <Label Text="{Binding name}" FontSize="18" FontFamily="MediumFont" TextColor="{DynamicResource DangerColor}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--<StackLayout Margin="20,0" VerticalOptions="Start">
+               
+            </StackLayout>-->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

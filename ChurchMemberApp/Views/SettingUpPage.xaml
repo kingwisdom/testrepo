@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChurchMemberApp.Views.SettingUpPage" BackgroundImageSource="start.png">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout Spacing="20" BackgroundColor="Black" Opacity="0.8" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" x:Name="delay">
+                <BoxView HeightRequest="40" BackgroundColor="Transparent" />
+                <StackLayout VerticalOptions="Center" BackgroundColor="Transparent" Padding="15">
+                <Label Text="The App is setting up for your church" FontFamily="LightFont" TextColor="White" HorizontalTextAlignment="Center" />
+                <ActivityIndicator IsVisible="True" IsRunning="True" WidthRequest="40" HeightRequest="40" />
+                </StackLayout>
+            </StackLayout>
+            <BoxView BackgroundColor="#000" Opacity="0.8" />
+        <StackLayout Margin="20,30,20,0">
+            <Label Text="WELCOME TO CHURCH" TextColor="DarkGray" Margin="0,30" />
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Label Text="This is a place to take church with you everywhere" TextColor="White" FontSize="30" FontFamily="LightFont" />
+            </StackLayout>
+            <BoxView HeightRequest="200" BackgroundColor="Transparent"/>
+            
+            <Button BackgroundColor="{DynamicResource DangerColor}" TextColor="White" CornerRadius="10" x:Name="btn" Text="Click To Continue" Clicked="Button_Clicked" />
+        </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

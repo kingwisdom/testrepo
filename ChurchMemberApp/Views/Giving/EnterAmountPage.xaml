@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" NavigationPage.HasNavigationBar="False"  x:Class="ChurchMemberApp.Views.Giving.EnterAmountPage" x:Name="med">
+    <ContentPage.Content>
+        <Grid Margin="20,0">
+            <Grid RowDefinitions="Auto,Auto,Auto">
+                <StackLayout Orientation="Horizontal" Margin="10,20,0,0" Spacing="20">
+                    <Label Text="&#xf060;" FontFamily="FontIcon" FontSize="20" TextColor="Black">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="back" NumberOfTapsRequired="1" Tapped="back_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Row="0" VerticalOptions="Start" TextColor="Black" FontFamily="MediumFont" Text="ENTER AN AMOUNT" FontSize="18" />
+                </StackLayout>
+
+                <Frame BackgroundColor="White" CornerRadius="5" Grid.Row="1">
+                    <StackLayout>
+                        <Label Text="Enter Amount" FontSize="12" FontFamily="LightFont" />
+                        <StackLayout Orientation="Horizontal" Spacing="20">
+                            <Frame CornerRadius="15" BorderColor="LightGray" Padding="15,5" HeightRequest="60" WidthRequest="200">
+                                <Label x:Name="resultText" Text="0" TextColor="Black" FontFamily="BoldFont" FontSize="36" VerticalTextAlignment="Center" VerticalOptions="Center" />
+                            </Frame>
+
+                            <Frame CornerRadius="15" BorderColor="LightGray"  Padding="10,5" WidthRequest="60">
+                                <Picker x:Name="picker"
+                                    TitleColor="Black">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>NGN</x:String>
+                                            <x:String>USD</x:String>
+                                            <x:String>PND</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                </Picker>
+                            </Frame>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                
+
+                <StackLayout Grid.Row="2" Margin="30,0,30,0" WidthRequest="200">
+                <pv:PancakeView BackgroundColor="White">
+                    <pv:PancakeView.Shadow>
+                        <pv:DropShadow Color="Black" BlurRadius="20" Offset="10,0"/>
+                    </pv:PancakeView.Shadow>
+                    <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*" RowSpacing="0" ColumnSpacing="0">
+                        <Frame BorderColor="LightGray" Padding="5">
+                                <Button Text="1" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White" />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="0" Grid.Column="1">
+                                <Button Text="2" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White"  />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="0" Grid.Column="2">
+                                <Button Text="3" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White"  />
+                        </Frame>
+
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="1" Grid.Column="0">
+                                <Button Text="4" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber"  BackgroundColor="White"  />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="1" Grid.Column="1">
+                                <Button Text="5" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White"  />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="1" Grid.Column="2">
+                                <Button Text="6" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White"  />
+                        </Frame>
+
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="2" Grid.Column="0">
+                                <Button Text="7" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber"  BackgroundColor="White"  />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="2" Grid.Column="1">
+                                <Button Text="8" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White"  />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="2" Grid.Column="2">
+                                <Button Text="9" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White"  />
+                        </Frame>
+
+
+                        <Frame BorderColor="LightGray" Padding="5"  Grid.Row="3" Grid.Column="0">
+                                <Button Text="⇽ Cancel" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnClear"  BackgroundColor="White" />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="3" Grid.Column="1">
+                                <Button Text="0" FontFamily="MediumFont" FontSize="36" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OnSelectNumber" BackgroundColor="White"  />
+                        </Frame>
+                        <Frame BorderColor="LightGray" Padding="5" Grid.Row="3" Grid.Column="2">
+                                <Button Text="." FontFamily="MediumFont" BackgroundColor="Transparent" Clicked="OnSelectNumber"  />
+                        </Frame>
+                    </Grid>
+                </pv:PancakeView>
+
+                    
+                    <Button Style="{StaticResource Buttons}" Text="GIVE NOW" Margin="0,60,0,5" x:Name="pay" Clicked="pay_Clicked" />
+                </StackLayout>
+
+
+                <!--<Grid Grid.Row="2">
+                    <pv:PancakeView BackgroundColor="White" HorizontalOptions="FillAndExpand" HeightRequest="50" CornerRadius="5,5,0,0">
+                        <StackLayout Orientation="Horizontal" Spacing="30" Margin="20,10">
+
+                            <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf015;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="home" Tapped="home_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf144;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="media" Tapped="media_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Frame x:Name="active" Padding="10,5" TranslationX="-70" BackgroundColor="#FFeee3" IsClippedToBounds="True" CornerRadius="15" HeightRequest="35" WidthRequest="80" HasShadow="False">
+                                <StackLayout Orientation="Horizontal" Margin="2">
+                                    <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf0d6;" FontFamily="FontIcon"  />
+                                    <Label Text="Media" FontFamily="MediumFont" HorizontalOptions="Center" TextColor="{DynamicResource PrimaryColor}"  FontSize="14"/>
+                                </StackLayout>
+                            </Frame>
+
+
+
+
+                            <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf086;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon"  />
+                            <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf007;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="profile" Tapped="profile_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                        </StackLayout>
+                    </pv:PancakeView>
+                </Grid>-->
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

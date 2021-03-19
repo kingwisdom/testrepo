@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" x:Class="ChurchMemberApp.Views.Media.PlayAudioPage" NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <FontImage x:Key="BackIcon" FontFamily="FontIcon" Glyph='&#xf048;' Size="20" Color="Black" />
+            <FontImage x:Key="PlayIcon" FontFamily="FontIcon" Glyph='&#xf04b;' Size="20" Color="Black" />
+            <FontImage x:Key="ForwardIcon" FontFamily="FontIcon" Glyph='&#xf051;' Size="20" Color="Black" />
+            <FontImage x:Key="PauseIcon" FontFamily="FontIcon" Glyph='&#xf04c;' Size="20" Color="Black" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Margin="20,0">
+            <Grid ColumnDefinitions="Auto,*" Margin="0,40,0,20">
+                <Label Text="&#xf104;" FontSize="24" TextColor="Black" VerticalOptions="Center" FontFamily="FontIcon">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Now Playing" Grid.Column="1" FontSize="16" FontFamily="MediumFont" TextColor="{DynamicResource PrimaryColor}" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Grid>
+
+            <Frame Padding="0" WidthRequest="200" HeightRequest="200" CornerRadius="100" VerticalOptions="Center" HorizontalOptions="Center" IsClippedToBounds="True">
+                <ffimageloading:CachedImage Source="{Binding Item.imagePath}" Aspect="Fill"/>
+            </Frame>
+
+            <Label Text="{Binding Item.name}" Margin="0,20,0,0" FontFamily="BoldFont" HorizontalOptions="Center" TextColor="Black" FontSize="20" LineBreakMode="TailTruncation" />
+            <Label Text="{Binding Item.category}" TextColor="#F5782F" FontFamily="LightFont" HorizontalOptions="Center" Margin="0,-10,0,0" />
+
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="End" Margin="20,20,20,30" ColumnSpacing="10">
+                <Label Text="{Binding PositionLabel}" TextColor="Black" FontFamily="LightFont" FontSize="Micro" />
+                <Slider Grid.Column="1" Maximum="{Binding Duration}" Minimum="0" DragCompletedCommand="{Binding SeekCompleted}" 
+                            Value="{Binding Position,Mode=TwoWay}" HeightRequest="2" MinimumTrackColor="{DynamicResource PrimaryColor}" MaximumTrackColor="Gray" ThumbColor="White" />
+
+                <Label Grid.Column="2" Text="{Binding DurationLabel}" TextColor="Black" FontFamily="LightFont" FontSize="Micro" />
+            </Grid>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                <Label Text="&#xf048;" TextColor="Black" FontFamily="FontIcon" FontSize="30" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PlayPrev}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                
+                <Frame BackgroundColor="{DynamicResource PrimaryColor}" Padding="0" IsClippedToBounds="True" WidthRequest="70" HeightRequest="70" CornerRadius="35" IsVisible="{Binding IsNotPlaying}">
+                    
+                     <Label Text="&#xf04b;" TextColor="{DynamicResource DangerColor}" FontFamily="FontIcon" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PlayCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Frame BackgroundColor="{DynamicResource PrimaryColor}" Padding="0" IsClippedToBounds="True" WidthRequest="70" HeightRequest="70" CornerRadius="35" IsVisible="{Binding IsPlaying}">
+
+                    <Label Text="&#x000f03e4;" TextColor="{DynamicResource DangerColor}" FontFamily="MaterialIcons" FontSize="30" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PauseCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                
+                <Label Text="&#xf051;" TextColor="Black" FontFamily="FontIcon" FontSize="30" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PlayNext}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+            <ActivityIndicator IsVisible="{Binding IsBusy}" Color="#3c6d8f"  VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="30"
+                                   IsRunning="{Binding IsBusy}" 
+                                   IsEnabled="{Binding IsBusy}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

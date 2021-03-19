@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" NavigationPage.HasNavigationBar="False"
+             x:Class="ChurchMemberApp.Views.Media.Downloads.Audio.MediaDownloadDetailPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20">
+                <ffimageloading:CachedImage Source="{Binding DownloadedMedia.imagePath}" Aspect="AspectFill" HeightRequest="200" />
+                <Label Text="&#xf053;" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="White" FontSize="18" FontFamily="FontIcon" Margin="15,25,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="back" Tapped="back_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="&#xf04b;" TextColor="White" FontFamily="FontIcon" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="play" Tapped="play_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Grid ColumnDefinitions="Auto,*" Margin="15,10" Grid.Row="1">
+                    <StackLayout>
+                        <Label Text="{Binding DownloadedMedia.name}" TextColor="Black" FontFamily="FontBold" LineBreakMode="TailTruncation" />
+                        <Label Text="{Binding DownloadedMedia.category}" FontSize="16" FontFamily="LightFont" TextColor="{DynamicResource DangerColor}" />
+                    </StackLayout>
+
+                </Grid>
+
+                <StackLayout Spacing="15" Grid.Row="2" Margin="15, 10">
+
+
+                    <Label FontSize="14" FontFamily="LightFont" Text="{Binding DownloadedMedia.dateAdded, StringFormat='{0:dddd, MMM dd, yyyy}'}" TextColor="{DynamicResource DarkColor}"/>
+                    <BoxView HeightRequest="1" BackgroundColor="LightGray" Opacity="0.7" />
+                    <Label Text="Description" FontFamily="BoldFont" TextColor="Black" />
+                    <Label Text="{Binding DownloadedMedia.description}" FontFamily="LightFont" />
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

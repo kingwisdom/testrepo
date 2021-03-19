@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChurchMemberApp.Views.Giving.ContributionItemPage">
+    <ContentPage.Content>
+        <StackLayout Margin="20,30,20,0" Spacing="10">
+            <Label Text="&#xf060;" FontFamily="FontIcon" FontSize="20" TextColor="Black">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="back" NumberOfTapsRequired="1" Tapped="back_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="Fill Your Payment and Proceed" TextColor="Black" FontSize="24" FontFamily="BoldFont" />
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding ContributionItems}" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="form">
+                <CollectionView.EmptyView>
+                    <Label Text="None for now" HorizontalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#FFFFFF" BorderColor="#0D37451A" CornerRadius="20" Padding="15">
+                            <StackLayout Spacing="10">
+                                <Grid RowDefinitions="Auto,Auto">
+                                    <Label Text="{Binding contributionName}" TextColor="Black" FontFamily="LightFont"/>
+                                    <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="White" Padding="10,0" BorderColor="LightGray">
+                                        <Entry Text="{Binding Amount}" Keyboard="Numeric" Placeholder="Please enter Amount to give" />
+                                    </Frame>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Style="{StaticResource Buttons}" Text="GIVE NOW" Margin="0,60,0,5" x:Name="pay" Command="{Binding PayCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

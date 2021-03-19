@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="ChurchMemberApp.Views.Contact.AboutChurchPage" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid RowDefinitions="Auto,Auto">
+                <Image Source="https://static01.nyt.com/images/2020/03/15/us/15virus-nochurch01/15virus-nochurch01-articleLarge.jpg" Aspect="Fill" WidthRequest="300" HeightRequest="250"/>
+                <BoxView BackgroundColor="Black" Opacity="0.8" />
+                <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="Black" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label Text="{Binding ChurchName}" TextColor="White" FontFamily="MediumFont" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
+
+                <pv:PancakeView CornerRadius="20,20,0,0" BackgroundColor="White" Margin="0,-40,0,0" Grid.Row="1">
+                    <StackLayout Margin="15,20,15,0" Spacing="25">
+                        <Label Text="About Us" TextColor="Black" FontFamily="BoldFont" FontSize="18" />
+                        <Button Text="View Details" BackgroundColor="{DynamicResource DangerColor}" BorderColor="Transparent" TextColor="White" FontFamily="MediumFont" CornerRadius="20" x:Name="about" Clicked="about_Clicked"/>
+
+                        <Label Text="Our Leaders" TextColor="Black" FontSize="18" FontFamily="BoldFont"/>
+                        <CollectionView ItemsSource="{Binding Pastors}" Margin="0,15,0,0" SelectedItem="SelectedPastor" SelectionMode="Single" SelectionChanged="CollectionView_SelectionChanged" HeightRequest="120">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                                        <Frame CornerRadius="10" HeightRequest="40" WidthRequest="40" IsClippedToBounds="True" Padding="0">
+                                            <Image Source="http://assets.stickpng.com/images/585e4bcdcb11b227491c3396.png" Aspect="AspectFit" />
+                                        </Frame>
+                                        <StackLayout Grid.Row="1">
+                                            <Label Text="{Binding name}" FontSize="11" FontFamily="BoldFont" />
+                                            <Label Text="{Binding branch}" FontSize="11" FontFamily="MediumFont" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Spacing="5" Grid.Row="2" HorizontalOptions="Center">
+                                            <Label Text="&#x000f020c;" FontFamily="MaterialIcons" TextColor="Black" />
+                                            <Label Text="&#x000f0544;" FontFamily="MaterialIcons" TextColor="Black" />
+                                            <Label Text="&#x000f02fe;" FontFamily="MaterialIcons" TextColor="Black" />
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+
+                        <Label Text="Contact" TextColor="Black" FontSize="18" FontFamily="BoldFont"/>
+                        <StackLayout Orientation="Horizontal" Spacing="20">
+                            <Label Text="&#x000f034e;" TextColor="{DynamicResource DarkColor}" FontSize="24" FontFamily="MaterialIcons" />
+                            <Label Text="{Binding Address}" FontFamily="LightFont" FontSize="14" />
+                        </StackLayout> 
+                        <BoxView BackgroundColor="{DynamicResource DarkColor}" HeightRequest="1" Opacity="0.5" />
+
+                        <StackLayout Orientation="Horizontal" Spacing="20">
+                            <Label Text="&#x000f01ee;" TextColor="{DynamicResource DarkColor}" FontSize="24" FontFamily="MaterialIcons" />
+                            <Label Text="{Binding Email}" FontFamily="LightFont" FontSize="14" />
+                        </StackLayout>
+                        <BoxView BackgroundColor="{DynamicResource DarkColor}" HeightRequest="1" Opacity="0.5" />
+
+                        <StackLayout Orientation="Horizontal" Spacing="20">
+                            <Label Text="&#x000f03f2;" TextColor="{DynamicResource DarkColor}" FontSize="24" FontFamily="MaterialIcons" />
+                            <Label Text="{Binding Phone}" FontFamily="LightFont" FontSize="14" />
+                        </StackLayout>
+                        <BoxView BackgroundColor="{DynamicResource DarkColor}" HeightRequest="1" Opacity="0.5" />
+
+
+                        <Label Text="Account Details" TextColor="Black" FontSize="18" FontFamily="BoldFont"/>
+
+                        <CollectionView ItemsSource="{Binding Banks}" HeightRequest="120">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="25" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="LightGray" CornerRadius="15">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Image Source="" Aspect="Fill" WidthRequest="20" HeightRequest="20" />
+
+                                            <StackLayout>
+                                                <Label Text="{Binding bankName}" TextColor="Black" FontSize="14" FontFamily="BoldFont" />
+                                                <Label Text="{Binding accountName}" TextColor="Black" FontSize="12" FontFamily="LightFont" />
+                                                <Label Text="{Binding accountNumber}" TextColor="Black" FontSize="12" FontFamily="LightFont" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        
+                    </StackLayout>
+                </pv:PancakeView>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

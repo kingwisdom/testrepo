@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:ChurchMemberApp.Views" xmlns:fonticons="clr-namespace:ChurchMemberApp.Helpers"
+             x:Class="ChurchMemberApp.Views.Pages.MainShellPage"
+       Shell.NavBarIsVisible="False">
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Color x:Key="GrayColor">Gray</Color>
+            <Color x:Key="BgColor">#F0F0F0</Color>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource BgColor}"/>
+                <Setter Property="Shell.TabBarForegroundColor" Value="{DynamicResource PrimaryColor}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource GrayColor}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{DynamicResource PrimaryColor}"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}"/>
+            <FontImage x:Key="MoreIcon" FontFamily="FontIcon" Glyph='&#xf141;' Size="20" Color="Black" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <TabBar>
+        <Tab Title="Home">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Home}" Size="Small"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.FeedPage}" />
+        </Tab>
+        
+        <Tab Title="Watch">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.MusicCircle}" Size="Small"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate local:Media.MediaPage}" />
+        </Tab>
+        <Tab Title="Give">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Cash}" Size="Small"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate local:Giving.GivePage}" />
+        </Tab>
+        <Tab Title="Group Chat">
+            
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Wechat}" Size="Small"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.GroupChatPage}" />
+        </Tab>
+        <Tab Title="More">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.More}" Size="Small"/>
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate local:Authentication.ProfilePage}" />
+        </Tab>
+    </TabBar>
+</Shell>

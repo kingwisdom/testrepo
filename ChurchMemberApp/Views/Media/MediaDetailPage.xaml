@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="ChurchMemberApp.Views.Media.MediaDetailPage" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <FontImage x:Key="BackIcon" FontFamily="FontIcon" Glyph='&#xf019;' Size="20" Color="White" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20">
+                <ffimageloading:CachedImage Source="{Binding ChurchMedia.imagePath}" Aspect="AspectFill" HeightRequest="200" />
+                <Label Text="&#xf053;" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="White" FontSize="18" FontFamily="FontIcon" Margin="15,25,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="back" Tapped="back_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="&#xf04b;" TextColor="White" FontFamily="FontIcon" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="play" Tapped="play_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Grid ColumnDefinitions="Auto,*" Margin="15,10" Grid.Row="1">
+                    <StackLayout>
+                        <Label Text="{Binding ChurchMedia.name}" TextColor="Black" FontFamily="FontBold" LineBreakMode="TailTruncation" />
+                        <Label Text="{Binding ChurchMedia.category}" FontSize="16" FontFamily="LightFont" TextColor="{DynamicResource DangerColor}" />
+                    </StackLayout>
+
+                    <!--<Button BackgroundColor="{DynamicResource PrimaryColor}" Text="Download" Grid.Column="1" CornerRadius="20" Visual="Material" VerticalOptions="Center" HorizontalOptions="End" />-->
+                    <Button Text="Download" ContentLayout="Left,5" Image="{StaticResource BackIcon}" Grid.Column="1"  TextColor="White"  VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="{DynamicResource DangerColor}" Visual="Material" FontFamily="LightFont" CornerRadius="10" x:Name="download" Clicked="download_Clicked"/>
+                </Grid>
+
+                <StackLayout Spacing="15" Grid.Row="2" Margin="15, 10">
+                    <ActivityIndicator
+                                   x:Name="indicator" 
+                                   Color="{DynamicResource DangerColor}"
+                                   HeightRequest="20" WidthRequest="20"/>
+                    
+                    <Label x:Name="progress" FontSize="Large" IsVisible="False" FontAttributes="Bold"
+                       VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="3" 
+                       Grid.Column="0" Grid.ColumnSpan="2" TextColor="{DynamicResource DangerColor}"/>
+                    
+                    <Label FontSize="14" FontFamily="LightFont" Text="{Binding ChurchMedia.dateAdded, StringFormat='{0:dddd, MMM dd, yyyy}'}" TextColor="{DynamicResource DarkColor}"/>
+                    <BoxView HeightRequest="1" BackgroundColor="LightGray" Opacity="0.7" />
+                    <Label Text="Description" FontFamily="BoldFont" TextColor="Black" />
+                    <Label Text="{Binding ChurchMedia.description}" FontFamily="LightFont" />
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

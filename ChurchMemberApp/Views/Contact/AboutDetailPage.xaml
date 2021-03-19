@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="ChurchMemberApp.Views.Contact.AboutDetailPage" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid RowDefinitions="Auto,Auto">
+                <Image Source="https://static01.nyt.com/images/2020/03/15/us/15virus-nochurch01/15virus-nochurch01-articleLarge.jpg" Aspect="Fill" WidthRequest="300" HeightRequest="250"/>
+                <BoxView BackgroundColor="Black" Opacity="0.8" />
+                <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="Black" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label Text="About Church" TextColor="White" FontFamily="MediumFont" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
+
+                <pv:PancakeView CornerRadius="25,25,0,0" BackgroundColor="White" Margin="0,-40,0,0" Grid.Row="1" Padding="20,30,20,20">
+                    <CollectionView ItemsSource="{Binding Abouts}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="25" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Spacing="10">
+                                    <Label Text="{Binding title}" FontSize="18" FontFamily="BoldFont" TextColor="Black" />
+                                    <Label Text="{Binding details}" FontSize="14" FontFamily="LightFont" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </pv:PancakeView>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

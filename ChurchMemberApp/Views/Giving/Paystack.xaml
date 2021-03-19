@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Plugin.PaystackInline.Forms.Plugin;assembly=Plugin.PaystackInline.Forms.Plugin"
+             Shell.PresentationMode="ModalAnimated"
+             x:Class="ChurchMemberApp.Views.Giving.Paystack">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Loading... please wait..." TextColor="White" FontSize="14" FontFamily="LightFont" x:Name="loading" Margin="0,40,0,0" HorizontalOptions="Center" />
+            <local:PaystackWebView x:Name="hybridWebView"  
+                 HorizontalOptions="FillAndExpand" 
+                 VerticalOptions="FillAndExpand"
+                 PaymentClosed="HybridWebView_PaymentClosed"
+                 PaymentSuccessful="hybridWebView_PaymentSuccessful"
+                  WebViewHeight="1000">
+            </local:PaystackWebView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
