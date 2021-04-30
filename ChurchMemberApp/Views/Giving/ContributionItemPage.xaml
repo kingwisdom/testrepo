@@ -1,17 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" Shell.PresentationMode="ModalAnimated"
              x:Class="ChurchMemberApp.Views.Giving.ContributionItemPage">
+    <ContentPage.Resources>
+        <Style TargetType="CollectionView">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" /> 
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Margin="20,30,20,0" Spacing="10">
-            <Label Text="&#xf060;" FontFamily="FontIcon" FontSize="20" TextColor="Black">
+            <Label Text="&#xf060;" FontFamily="FontIcon" FontSize="20" TextColor="{AppThemeBinding Light=Black, Dark=White}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer x:Name="back" NumberOfTapsRequired="1" Tapped="back_Tapped" />
                 </Label.GestureRecognizers>
             </Label>
-            <Label Text="Fill Your Payment and Proceed" TextColor="Black" FontSize="24" FontFamily="BoldFont" />
+            <Label Text="Fill Your Payment and Proceed" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="24" FontFamily="BoldFont" />
 
-            <CollectionView Grid.Row="1" ItemsSource="{Binding ContributionItems}" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="form">
+            <CollectionView Grid.Row="1" ItemsSource="{Binding ContributionItems}" SelectionMode="None" SelectedItem="{Binding SelectItem}" x:Name="form">
                 <CollectionView.EmptyView>
                     <Label Text="None for now" HorizontalOptions="Center" />
                 </CollectionView.EmptyView>
@@ -25,8 +42,8 @@
                             <StackLayout Spacing="10">
                                 <Grid RowDefinitions="Auto,Auto">
                                     <Label Text="{Binding contributionName}" TextColor="Black" FontFamily="LightFont"/>
-                                    <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="White" Padding="10,0" BorderColor="LightGray">
-                                        <Entry Text="{Binding Amount}" Keyboard="Numeric" Placeholder="Please enter Amount to give" />
+                                    <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="{AppThemeBinding Light=White, Dark=Black}" Padding="10,0" BorderColor="LightGray">
+                                        <Entry Text="{Binding Amount}" TextColor="{AppThemeBinding Light=Black, Dark=White}" Keyboard="Numeric" Placeholder="Please enter Amount to give" />
                                     </Frame>
                                 </Grid>
                             </StackLayout>
@@ -35,7 +52,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Button Style="{StaticResource Buttons}" Text="GIVE NOW" Margin="0,60,0,5" x:Name="pay" Command="{Binding PayCommand}" />
+            <Button Style="{StaticResource Buttons}" BackgroundColor="Green" Text="GIVE NOW" Margin="0,20,0,5" x:Name="pay" Command="{Binding PayOptionCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

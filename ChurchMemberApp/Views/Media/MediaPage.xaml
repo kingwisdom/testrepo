@@ -21,14 +21,14 @@
             </Grid>
         </Grid>
         <xct:TabView Grid.Row="1" Margin="15,0" HorizontalOptions="Center">
-            <xct:TabViewItem Text="Sermon" HorizontalOptions="Center" FontFamily="MediumFont" Margin="10,0,0,10" FontAttributes="Bold" TextColorSelected="{DynamicResource PrimaryColor}" FontFamilySelected="BoldFont">
+            <xct:TabViewItem Text="Sermon" HorizontalOptions="Center" FontFamily="MediumFont" Margin="10,0,0,10" FontAttributes="Bold" TextColorSelected="{DynamicResource PrimaryColor}" FontFamilySelected="BoldFont" TextColor="{AppThemeBinding Light=Black, Dark=White}">
                 <xct:TabViewItem.FontSizeSelected>24</xct:TabViewItem.FontSizeSelected>
                 <xct:TabViewItem.Content>
                     <view:SermonView />
                 </xct:TabViewItem.Content>
             </xct:TabViewItem>
 
-            <xct:TabViewItem Text="Live" FontFamily="MediumFont" HorizontalOptions="Center" Margin="10,0,0,10" FontAttributes="Bold" TextColorSelected="{DynamicResource PrimaryColor}" FontFamilySelected="BoldFont" IsClippedToBounds="True">
+            <xct:TabViewItem Text="Live" FontFamily="MediumFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" HorizontalOptions="Center" Margin="10,0,0,10" FontAttributes="Bold" TextColorSelected="{DynamicResource PrimaryColor}" FontFamilySelected="BoldFont" IsClippedToBounds="True">
                 <xct:TabViewItem.FontSizeSelected>24</xct:TabViewItem.FontSizeSelected>
                 <xct:TabViewItem.Content>
                     <view:LiveView />

@@ -2,6 +2,7 @@
 using ChurchMemberApp.Models.Request;
 using ChurchMemberApp.Services;
 using ChurchMemberApp.Views.Authentication;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,19 +23,32 @@ namespace ChurchMemberApp.ViewModel.Pages
             set { _feed = value; }
         }
 
+        
         public FeedDetailViewModel(Feeds feeds)
         {
             this.Feed = feeds;
             Height = (feeds.comments.Count * 40) + (feeds.comments.Count * 20);
+            imgHeight = feeds.mediaUrl == null ? 0 : 300;
         }
 
         private string _comment;
-
         public string comment
         {
             get { return _comment; }
             set { _comment = value;
                 OnPropertyChanged(); }
+        }
+        private int h;
+        public int imgHeight
+        {
+            get { return h; }
+            set { h = value; OnPropertyChanged(); }
+        }
+        private int w;
+        public int imgWidth
+        {
+            get { return w; }
+            set { w = value; OnPropertyChanged(); }
         }
 
         int height;
@@ -84,7 +98,7 @@ namespace ChurchMemberApp.ViewModel.Pages
 
                     var request = new PostCommentReq()
                     {
-                        commenterName = Preferences.Get("userName", string.Empty),
+                        commenterName = Preferences.Get("fullName", string.Empty),
                         commentMessage = comment,
                         postId = Feed.postId.ToString()
                     };

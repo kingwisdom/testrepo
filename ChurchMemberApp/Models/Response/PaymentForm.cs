@@ -42,6 +42,7 @@ namespace ChurchMemberApp.Models.Response
         public string id { get; set; }
         public string paymentGateWayID { get; set; } = "00000000-0000-0000-0000-000000000000";
         public string paymentFormID { get; set; }
+        //
         public string subAccountID { get; set; }
         public string paymentGateName { get; set; }
         public string countryCoverageArea { get; set; }

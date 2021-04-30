@@ -23,8 +23,14 @@ namespace ChurchMemberApp.Views.Media
 
         private async void audiofeeds_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = new MediaDetailPage(e.CurrentSelection[0] as ChurchMedia);
-            await Navigation.PushAsync(item);
+            var item = e.CurrentSelection[0] as ChurchMedia;
+            if (item == null)
+                return;
+
+
+            await Navigation.PushModalAsync(new PlayAudioPage(item, "dd"));
+            MessagingCenter.Send(this, "Stream", item);
+            
         }
     }
 }

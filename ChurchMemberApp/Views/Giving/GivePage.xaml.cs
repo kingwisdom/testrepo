@@ -19,28 +19,24 @@ namespace ChurchMemberApp.Views.Giving
         {
             InitializeComponent();
             BindingContext = vm = new OfferingFormViewModel();
+            vm.TransactionCommand.Execute(null);
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             vm.GetPaymentForms.Execute(null);
-            med.Opacity = 0;
-            await med.FadeTo(1, 1000);
-            //active.Opacity = 0;
-            //await Task.WhenAny<bool>
-            //(
-            //    active.FadeTo(1, 2000),
-            //    active.TranslateTo(0, 0, 2000)
-            //);
+           // med.Opacity = 0;
+           // await med.FadeTo(1, 1000);
+           
         }
 
       
-        protected override bool OnBackButtonPressed()
-        {
-            base.OnBackButtonPressed();
-            return true;
-        }
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    base.OnBackButtonPressed();
+        //    return true;
+        //}
 
         private async void oft_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

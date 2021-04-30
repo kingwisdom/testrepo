@@ -36,7 +36,7 @@
                     <Label Text="{Binding Pastor.branch}" FontFamily="MediumFont" TextColor="Black" />
                     <Label Text="{Binding Pastor.level}" FontFamily="LightFont" TextColor="{DynamicResource DangerColor}" />
 
-                    <CollectionView ItemsSource="{Binding Socials}" Margin="0,15,0,0" SelectedItem="SelectedPastor" SelectionChanged="CollectionView_SelectionChanged" SelectionMode="Single" HeightRequest="120">
+                    <CollectionView ItemsSource="{Binding Socials}" Margin="0,15,0,0" SelectedItem="SelectedPastor" SelectionChanged="CollectionView_SelectionChanged" SelectionMode="Single" HeightRequest="50">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
                         </CollectionView.ItemsLayout>
@@ -44,17 +44,14 @@
                             <DataTemplate>
                                 <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
                                     <Label Text="{Binding name}" FontFamily="MaterialIcons" TextColor="Black" />
-                                   <!-- <Label Text="&#x000f020c;" FontFamily="MaterialIcons" TextColor="Black" />
+                                    <!-- <Label Text="&#x000f020c;" FontFamily="MaterialIcons" TextColor="Black" />
                                     <Label Text="&#x000f0544;" FontFamily="MaterialIcons" TextColor="Black" />
                                     <Label Text="&#x000f02fe;" FontFamily="MaterialIcons" TextColor="Black" />-->
                                 </StackLayout>
-                                
+
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-
-
-                    
                 </StackLayout>
             </StackLayout>
 

@@ -3,5 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              x:Class="ChurchMemberApp.Views.Media.VLCPage">
 
-    <shared:MediaPlayerElement x:Name="mymedia" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+    <Grid>
+        <shared:MediaPlayerElement x:Name="mymedia" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+
+        <StackLayout VerticalOptions="End" HorizontalOptions="Center" Spacing="10">
+            <ActivityIndicator
+                x:Name="indicator" 
+                Color="White"
+                HeightRequest="40" WidthRequest="40"/>
+
+            <Label x:Name="progress" FontSize="Large" IsVisible="False" FontAttributes="Bold"
+                        TextColor="White"/>
+            
+            <Label Text="" TextColor="White" FontSize="12" FontFamily="LightFont" x:Name="desc" />
+        </StackLayout>
+
+        <ImageButton x:Name="download" Clicked="download_Clicked" BackgroundColor="Transparent" VerticalOptions="End" HorizontalOptions="End" Margin="0,0,20,20">
+            <ImageButton.Source>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Color="#FEFEFE"
+                                 Glyph="&#x000f01da;" Size="25"/>
+            </ImageButton.Source>
+
+        </ImageButton>
+    </Grid>
 </ContentPage>

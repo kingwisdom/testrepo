@@ -26,9 +26,9 @@ namespace ChurchMemberApp.Views.Giving
             BindingContext = vm = new ContributionItemVM(model);
         }
 
-        private void back_Tapped(object sender, EventArgs e)
+        private async void back_Tapped(object sender, EventArgs e)
         {
-
+            await Shell.Current.GoToAsync("../..");
         }
     }
 }

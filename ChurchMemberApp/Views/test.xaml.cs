@@ -1,24 +1,36 @@
 ﻿
+using LibVLCSharp.Shared;
+using MediaManager;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using YoutubeExplode;
+using YoutubeExplode.Videos.Streams;
 
 namespace ChurchMemberApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class test : ContentPage
     {
+        LibVLC lib;
         public test()
         {
             InitializeComponent();
-            var htmlSource = new HtmlWebViewSource();
-            htmlSource.Html = @"
-                    <html>
-                    <body>
-                    <h1 style='color:red;text-align:center'>My web view</h1>
-                    </body>
-                    </html>
-                    ";
-            yourWebView.Source = htmlSource;
+           // Init();
         }
+
+        public test(string url)
+        {
+            InitializeComponent();
+            Init(url);
+        }
+
+
+
+        private async void Init(string url)
+        {
+           await CrossMediaManager.Current.Play(url);
+        }
+
     }
 }

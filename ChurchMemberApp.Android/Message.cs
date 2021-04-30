@@ -1,5 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -7,6 +9,7 @@ using Android.Widget;
 using ChurchMemberApp.Platform;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms;
@@ -25,5 +28,6 @@ namespace ChurchMemberApp.Droid
         {
             Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
         }
+
     }
 }

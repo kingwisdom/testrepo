@@ -44,25 +44,11 @@ namespace ChurchMemberApp
             indicator.IsVisible = false;
             church.ItemsSource = ChurchList.OrderBy(e=>e.churchName);
 
-           // if(response != null)       
         }
 
-        private void select_Clicked(object sender, EventArgs e)
-        {
-
-        }
-
-       private void Entry_TextChanged(object sender, TextChangedEventArgs e) { 
-           
-       }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-            //var newChurchSearchList = ChurchList.Where(c => c.churchName.Trim().ToLower().Contains("techteam")).AsEnumerable(); //as ObservableCollection<Churches>;
-            //church.ItemsSource = newChurchSearchList;
-
-            //var searchResult = ChurchList.Where(er => er.churchName.ToLower().Contains(search.Text.ToLower()));
             indicator.IsVisible = true;
             var searchResult = ChurchList.Where(er => er.churchName.ToLower().Contains(e.NewTextValue.ToLower()));
             church.ItemsSource = searchResult;
@@ -90,21 +76,21 @@ namespace ChurchMemberApp
                         {
                             //Profile = new ChurchProfile(JsonConvert.DeserializeObject<ChurchProfile>(result));
                             Profile = JsonConvert.DeserializeObject<ChurchProfile>(result);
-                            var colo = Profile.churchAppBackgroundColor != string.Empty ? Profile.churchAppBackgroundColor : "000";
+                            var colo = Profile.churchAppBackgroundColor != string.Empty ? Profile.churchAppBackgroundColor : "#fb2056";
                             Preferences.Set("appThemeColor", colo);
 
-                            //if (string.IsNullOrEmpty(colo))
-                            //{
-                            //    Application.Current.Resources["PrimaryColor"] = Color.Green;
-                            //}
-                            //else
-                            //{
-                            Application.Current.Resources["PrimaryColor"] = Color.FromHex(Preferences.Get("appThemeColor", string.Empty));
-                            // }
+                            if (string.IsNullOrEmpty(colo))
+                            {
+                                Application.Current.Resources["PrimaryColor"] = Color.Green;
+                            }
+                            else
+                            {
+                                Application.Current.Resources["PrimaryColor"] = colo;
+                            }
                         }
                         else
                         {
-                            Application.Current.Resources["PrimaryColor"] = Color.FromHex("#000");
+                            //Application.Current.Resources["PrimaryColor"] = Color.FromHex("#000");
                             App.Current.MainPage = new SettingUpPage();
                         }
                     }

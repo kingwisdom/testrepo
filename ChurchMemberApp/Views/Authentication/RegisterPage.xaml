@@ -17,9 +17,10 @@
             </Label>
             <Label FontFamily="BoldFont"  Text="SIGN UP" TextColor="Black" FontSize="30" Margin="0, 30" />
 
-            <StackLayout>
+                
+                <StackLayout>
                     <Label Text="NAME" FontFamily="MediumFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="16" />
-                <Entry x:Name="name" Placeholder="Create Name" Text="{Binding Name}"/>
+                <Entry x:Name="name" Placeholder="Create Name" Text="{Binding Name}" />
                 <BoxView HeightRequest="1" BackgroundColor="Gray">
                     <BoxView.Triggers>
                         <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference name}, Path=IsFocused}" Value="True">
@@ -29,41 +30,6 @@
                 </BoxView>
             </StackLayout>
             
-            <StackLayout>
-                    <Label Text="EMAIL" FontFamily="MediumFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="16" />
-                    <Entry x:Name="email" Placeholder="Create Email" Text="{Binding Email}" TextColor="{AppThemeBinding Light=Black, Dark=White}">
-                        <Entry.Behaviors>
-                            <xct:EmailValidationBehavior
-                                 DecorationFlags="Trim"
-                                 InvalidStyle="{StaticResource InvalidStyle}" />
-                        </Entry.Behaviors>
-                    </Entry>
-                    <BoxView HeightRequest="1" BackgroundColor="Gray">
-                    <BoxView.Triggers>
-                        <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference email}, Path=IsFocused}" Value="True">
-                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
-                        </DataTrigger>
-                    </BoxView.Triggers>
-                </BoxView>
-                
-            </StackLayout>
-
-
-                <StackLayout>
-                    <Label Text="Phone" FontFamily="MediumFont"  TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="16" />
-                    <Entry x:Name="phone" Placeholder="Phone Number" Text="{Binding Phone}" TextColor="{AppThemeBinding Light=Black, Dark=White}">
-                        <Entry.Behaviors>
-                            <xct:TextValidationBehavior MinimumLength="10"  InvalidStyle="{StaticResource InvalidStyle}" />
-                        </Entry.Behaviors>
-                    </Entry>
-                    <BoxView HeightRequest="1" BackgroundColor="Gray">
-                        <BoxView.Triggers>
-                            <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference phone}, Path=IsFocused}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
-                            </DataTrigger>
-                        </BoxView.Triggers>
-                    </BoxView>
-                </StackLayout>
 
                 <StackLayout>
                     <Label Text="Password" FontFamily="MediumFont"  TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="16" />
@@ -98,7 +64,7 @@
                 </BoxView>
             </StackLayout>
 
-                <Button Style="{StaticResource Buttons}" Text="SIGN UP" Command="{Binding RegisterCommand}" TextColor="{AppThemeBinding Light=Black, Dark=White}">
+                <Button Style="{StaticResource Buttons}" Text="SIGN UP" Command="{Binding RegisterCommand}" TextColor="{AppThemeBinding Light=Black, Dark=White}" IsEnabled="{Binding IsNotBusy}">
                 <Button.Triggers>
                     <DataTrigger TargetType="Button"
                                  Binding="{Binding Source={x:Reference cpass},
@@ -109,7 +75,9 @@
                 </Button.Triggers>
             </Button>
 
-            <Label HorizontalTextAlignment="Center" FontFamily="MediumFont">
+                <ActivityIndicator Color="Orange" IsRunning="True" IsVisible="{Binding IsBusy}" />
+
+                <Label HorizontalTextAlignment="Center" FontFamily="MediumFont">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span TextColor="Black" Text="Already have an account? " />

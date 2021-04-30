@@ -1,4 +1,6 @@
-﻿using ChurchMemberApp.ViewModel.Authentication;
+﻿using ChurchMemberApp.Models.Request;
+using ChurchMemberApp.Services;
+using ChurchMemberApp.ViewModel.Authentication;
 using System;
 using System.Collections.Generic;
 
@@ -25,5 +27,8 @@ namespace ChurchMemberApp.Views.Authentication
         {
             Navigation.PopModalAsync();
         }
+
+
+    
     }
 }

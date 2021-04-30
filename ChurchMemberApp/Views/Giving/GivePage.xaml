@@ -1,30 +1,102 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" ios:Page.UseSafeArea="True" x:Class="ChurchMemberApp.Views.Giving.GivePage" NavigationPage.HasNavigationBar="False" x:Name="med" BackgroundColor="#FCFBFB" >
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:xct="http://xamarin.com/schemas/2020/toolkit" ios:Page.UseSafeArea="True" x:Class="ChurchMemberApp.Views.Giving.GivePage" NavigationPage.HasNavigationBar="False" x:Name="med" BackgroundColor="#FCFBFB" Shell.PresentationMode="ModalAnimated">
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto,*" Margin="20,10">
-            <pv:PancakeView Grid.Row="0" BackgroundColor="#FFFFFF" CornerRadius="0,0,15,15" Padding="15" Margin="0,0,0,30">
-                <Label VerticalOptions="Start" TextColor="Black" FontFamily="BoldFont" Text="Giving" FontSize="28" />
-            </pv:PancakeView>
+        <StackLayout>
+            <Grid RowDefinitions="Auto" Margin="20,0">
+                <pv:PancakeView Grid.Row="0" BackgroundColor="#FFFFFF" CornerRadius="0,0,15,15" Padding="15" Margin="0,0,0,10">
+                    <Label VerticalOptions="Start" TextColor="Black" FontFamily="BoldFont" Text="Giving" FontSize="28" />
+                </pv:PancakeView>
+            </Grid>
+            
 
-            <CollectionView Grid.Row="1" ItemsSource="{Binding Oft}" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="oft" SelectionChanged="oft_SelectionChanged">
-                <CollectionView.EmptyView>
-                    <Label Text="No payment options yet!" VerticalOptions="Center" FontSize="18" FontFamily="LightFont" HorizontalOptions="Center" />
-                </CollectionView.EmptyView>
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
+            <xct:TabView
+                TabStripPlacement="Top"
+                TabStripBackgroundColor="White"
+                TabStripHeight="60"
+                TabIndicatorColor="{DynamicResource PrimaryColor}"
+                TabContentBackgroundColor="White">
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#FFFFFF" BorderColor="#0D37451A" CornerRadius="20" Padding="15">
-                            <Label Text="{Binding name}" FontSize="18" FontFamily="MediumFont" TextColor="{DynamicResource DangerColor}" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <!--<StackLayout Margin="20,0" VerticalOptions="Start">
-               
-            </StackLayout>-->
-        </Grid>
+                <xct:TabViewItem
+                    Icon=""
+                    Text="Give Here (NGN)"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    FontFamily="MediumFont"
+                    FontFamilySelected="BoldFont"
+                    TextColorSelected="{DynamicResource PrimaryColor}"
+                    FontSize="14">
+                    <Grid Margin="20,20,20,0">
+                    <CollectionView ItemsSource="{Binding Oft}" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="oft" SelectionChanged="oft_SelectionChanged">
+                        <CollectionView.EmptyView>
+                            <Label Text="No payment options yet!" VerticalOptions="Center" FontSize="18" FontFamily="LightFont" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="15" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#FFFFFF" BorderColor="#0D37451A" CornerRadius="20" Padding="15">
+                                    <Label Text="{Binding name}" FontSize="18" FontFamily="MediumFont" TextColor="{DynamicResource DangerColor}" />
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    </Grid>
+                </xct:TabViewItem>
+
+                <xct:TabViewItem
+                    Icon=""
+                    Text="My Transactions"
+                    FontFamily="MediumFont"
+                    FontFamilySelected="BoldFont"
+                    TextColor="{DynamicResource GrayColor}"
+                    TextColorSelected="{DynamicResource PrimaryColor}"
+                    FontSize="14">
+                    <Grid  Margin="20,20,20,0">
+                        <CollectionView ItemsSource="{Binding UserContributions}" SelectionMode="Single">
+                            <CollectionView.EmptyView>
+                                <Label Text="No Transaction yet!" VerticalTextAlignment="Center" FontSize="18" FontFamily="LightFont" HorizontalOptions="Center" />
+                            </CollectionView.EmptyView>
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="15" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="#FFFFFF" BorderColor="#0D37451A" CornerRadius="20" Padding="15">
+                                        <StackLayout>
+                                            <Label Text="{Binding memo}" FontSize="18" FontFamily="MediumFont" TextColor="{DynamicResource DangerColor}" />
+                                            <Label Text="{Binding date}" FontSize="16" FontFamily="LightFont" TextColor="{DynamicResource GrayColor}"/>
+                                            <Label Text="{Binding paymentGatewayName}" FontSize="16" FontFamily="LightFont" TextColor="{DynamicResource GrayColor}"/>
+                                            <Label Text="{Binding amount}" FontSize="16" FontFamily="LightFont" TextColor="{DynamicResource GrayColor}"/>
+                                        </StackLayout>
+                                        
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </Grid>
+                </xct:TabViewItem>
+            </xct:TabView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

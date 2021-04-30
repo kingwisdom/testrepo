@@ -25,7 +25,25 @@ namespace ChurchMemberApp.ViewModel.Pages
 {
     public class FeedViewModel : BaseViewModel
     {
+        public static FeedViewModel instance;
         Imessaging message { get; set; }
+        IVImages vconvert { get; set; }
+
+        bool searchListIsvisible;
+        public bool SearchlistIsvisible
+        {
+            get
+            {
+                return searchListIsvisible;
+            }
+            set
+            {
+                searchListIsvisible = value; OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Feeds> SearhList { get; set; }
+
 
         ObservableCollection<Feeds> feeds;
         public ObservableCollection<Feeds> Feeds
@@ -50,21 +68,47 @@ namespace ChurchMemberApp.ViewModel.Pages
             if (IsRefreshing)
                 return;
             IsRefreshing = true;
-            GetFeeds();
-            IsRefreshing = false;
+            // GetFeeds();
+            GetFeedsCommand.Execute(null);
+
+             IsRefreshing = false;
         });
 
+        public void OnAppearing()
+        {
+            IsBusy = true;
+            SelectFeed = null;
+        }
+
+        async void OnItemSelected(Feeds item)
+        {
+            if (item == null)
+                return;
+
+            // This will push the ItemDetailPage onto the navigation stack
+            //await Shell.Current.GoToAsync($"{nameof(FeedDetailPage)}?{nameof(FeedDetailViewModel.Feed.postId)}={item.postId}");
+            await App.Current.MainPage.Navigation.PushAsync(new FeedDetailPage(item));
+        }
+        public Command<Feeds> ItemTapped { get; }
         public FeedViewModel()
         {
             message = DependencyService.Get<Imessaging>();
             Feeds = new ObservableCollection<Feeds>();
-
+            ItemTapped = new Command<Feeds>(OnItemSelected);
+            vconvert = DependencyService.Get<IVImages>();
             MessagingCenter.Subscribe<SelectChurchPage>(this, "load", (sender) =>
             {
                 GetFeedsCommand.Execute(null);
             });
+            MessagingCenter.Subscribe<App>(this, "loadFeed", (sender) =>
+            {
+                GetFeedsCommand.Execute(null);
+            });
 
-            GetFeeds();  
+            instance = this;
+
+            GetFeeds();
+            
         }
 
 
@@ -77,8 +121,6 @@ namespace ChurchMemberApp.ViewModel.Pages
                 
                 if (App.AppKey != string.Empty)
                 {
-                    ///ApiServices services = new ApiServices();
-                    //var result = await services.GetAllChurchFeeds(App.AppKey, Preferences.Get("userId", string.Empty));
                     var json = Preferences.Get("AllFeeds", string.Empty);
                     var result = JsonConvert.DeserializeObject<IEnumerable<Feeds>>(json);
                     if (result != null)
@@ -86,6 +128,17 @@ namespace ChurchMemberApp.ViewModel.Pages
                         
                         foreach (var item in result)
                         {
+                            if(item.type == "Video")
+                            {
+                                try
+                                {
+                                    //item.VidImage = vconvert.GenerateThumbImage(item.mediaUrl, 1);
+                                    item.VidImage = "https://investorpresentations.co.za/videos/placeholder_1080.jpg";
+                                }
+                                catch(Exception ex)
+                                {
+                                }
+                            }
                             Feeds.Add(item);
                         }
                     }
@@ -111,6 +164,7 @@ namespace ChurchMemberApp.ViewModel.Pages
                 var result = await services.GetAllChurchFeeds(App.AppKey, Preferences.Get("userId",string.Empty));
                 if (result != null)
                 {
+                    
                     Feeds.Clear();
                     foreach (var item in result)
                     {
@@ -144,7 +198,7 @@ namespace ChurchMemberApp.ViewModel.Pages
                     mobileUserID = Preferences.Get("userId", string.Empty),
                     postId = feed.postId
                 };
-                
+
                 var res =  await ApiServices.LikePost(likeModel);
                
 
@@ -175,8 +229,9 @@ namespace ChurchMemberApp.ViewModel.Pages
                         feed.likeColor = feed.colorChange;
                     }
 
-
+                    
                 }
+                //await ApiServices.LikePost(likeModel);
 
             }
         });
@@ -195,7 +250,7 @@ namespace ChurchMemberApp.ViewModel.Pages
                     Subject = share.content,
                     Text = share.content,
                     Title = share.title,
-                    Uri = share.mediaUrl
+                    Uri = "https://churchplus.co"
                 });
 
                 var res = await ApiServices.PostShare(share.postId.ToString());

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "468201552068",
+    "project_id": "churchplusv3-mobile",
+    "storage_bucket": "churchplusv3-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468201552068:android:70076c358e1cd15bc2b191",
+        "android_client_info": {
+          "package_name": "com.churchplus.app.pottershouseoflagos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "468201552068-rgisfah8l0gh63iop9npsclenjfckpp9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQq6xAZgN3jvffKqRJ6ctWFjLroIT4W3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "468201552068-rgisfah8l0gh63iop9npsclenjfckpp9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

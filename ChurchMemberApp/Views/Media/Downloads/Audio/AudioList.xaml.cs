@@ -22,8 +22,17 @@ namespace ChurchMemberApp.Views.Media.Downloads.Audio
 
         private async void audio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = new MediaDownloadDetailPage(e.CurrentSelection[0] as DownloadedMedia);
-            await Navigation.PushAsync(item);
+            var page = e.CurrentSelection[0] as DownloadedMedia;
+            //var item = new MediaDownloadDetailPage(page);
+           // await Navigation.PushAsync(item);
+
+            if (page.mediaType == Models.Response.MediaType.Video)
+            {
+                await Navigation.PushAsync(new VLCPage(page.filePath));
+                return;
+            }
+            await Navigation.PushAsync(new PlayAudio(page, "dd"));
+            MessagingCenter.Send(this, "Stream", page);
         }
 
         private void back_Tapped(object sender, EventArgs e)

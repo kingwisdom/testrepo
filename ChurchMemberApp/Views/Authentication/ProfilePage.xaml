@@ -34,51 +34,43 @@
 
                 </ci:CircleImage>
             </Frame>
-                <Label Text="Moses Mayor Ogumuyiwa" x:Name="userName" TextColor="Black" FontSize="16" FontFamily="BoldFont" HorizontalOptions="Center" />
-                <Label Text="mayor@gmail.com" x:Name="userEmail" TextColor="Black" FontSize="14" FontFamily="LightFont" Margin="0,-25,0,0" HorizontalOptions="Center" />
+                <Label x:Name="userName" TextColor="Black" FontSize="16" FontFamily="BoldFont" HorizontalOptions="Center" />
+                <Label x:Name="userEmail" TextColor="Black" FontSize="14" FontFamily="LightFont" Margin="0,-25,0,0" HorizontalOptions="Center" />
             
             </StackLayout>
 
             <pv:PancakeView BackgroundColor="#FEFEFE" CornerRadius="15,15,0,0">
                 <ScrollView>
                     <StackLayout Spacing="20" Margin="20,20,0,0">
-                        <StackLayout Orientation="Horizontal" Spacing="25"
-                                     touch:TouchEff.PressedAnimationDuration="800"
-                                                                touch:TouchEff.RegularAnimationDuration="800"
-                                                                touch:TouchEff.PressedScale="0.6"
-                                                                touch:TouchEff.PressedOpacity="0.8"
-                                                                touch:TouchEff.RippleCount="-1">
+                        <StackLayout Orientation="Horizontal" Spacing="25">
                             <Label Text="&#x000f0007;" TextColor="{DynamicResource PrimaryColor}" FontSize="24" FontFamily="MaterialIcons" VerticalOptions="Center" />
                             <Label Text="Profile" TextColor="Black" FontSize="16" FontFamily="BoldFont" VerticalOptions="Center" />
-                            
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="profile" NumberOfTapsRequired="1" Tapped="profile_Tapped" />
+                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                         
-                        <StackLayout Orientation="Horizontal" Spacing="25"
-                                     touch:TouchEff.PressedAnimationDuration="800"
-                                                                touch:TouchEff.RegularAnimationDuration="800"
-                                                                touch:TouchEff.PressedScale="0.6"
-                                                                touch:TouchEff.PressedOpacity="0.8"
-                                                                touch:TouchEff.RippleCount="-1">
+                        <StackLayout Orientation="Horizontal" Spacing="25">
                             <Label Text="&#x000f0007;" TextColor="{DynamicResource PrimaryColor}" FontSize="24" FontFamily="MaterialIcons" VerticalOptions="Center" />
                             <Label Text="My Downloads" TextColor="Black" FontSize="16" FontFamily="BoldFont" VerticalOptions="Center" />
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer x:Name="downloads" Tapped="downloads_Tapped" NumberOfTapsRequired="1" />
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
-                        <StackLayout Orientation="Horizontal" Spacing="25">
+                        <!--<StackLayout Orientation="Horizontal" Spacing="25">
                             <Label Text="&#xf0584;" TextColor="{DynamicResource PrimaryColor}" FontSize="24" FontFamily="MaterialIcons" VerticalOptions="Center" />
                             <Label Text="Wallet" TextColor="Black" FontSize="16" FontFamily="BoldFont" VerticalOptions="Center" />
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer x:Name="wallet" />
                             </StackLayout.GestureRecognizers>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal" Spacing="25">
+                        </StackLayout>-->
+                        <!--<StackLayout Orientation="Horizontal" Spacing="25">
                             <Label Text="&#x000f0d40;" TextColor="{DynamicResource PrimaryColor}" FontSize="24" FontFamily="MaterialIcons" VerticalOptions="Center" />
                             <Label Text="Subscription" TextColor="Black" FontSize="16" FontFamily="BoldFont" VerticalOptions="Center" />
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer x:Name="sub" />
                             </StackLayout.GestureRecognizers>
-                        </StackLayout>
+                        </StackLayout>-->
 
                         <StackLayout Orientation="Horizontal" Spacing="25" touch:TouchEff.PressedAnimationDuration="800"
                                                                 touch:TouchEff.RegularAnimationDuration="800"
@@ -98,7 +90,7 @@
                                 <TapGestureRecognizer x:Name="cinfo" Tapped="cinfo_Tapped" NumberOfTapsRequired="1" />
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
-                         <StackLayout Orientation="Horizontal" Spacing="25">
+                         <StackLayout Orientation="Horizontal" Spacing="25" x:Name="logoutBtn" IsVisible="False">
                             <Label Text="&#x000f0343;" TextColor="{DynamicResource PrimaryColor}" FontSize="24" FontFamily="MaterialIcons" VerticalOptions="Center" />
                             <Label Text="Log out" TextColor="Black" FontSize="16" FontFamily="BoldFont" VerticalOptions="Center" />
                             <StackLayout.GestureRecognizers>

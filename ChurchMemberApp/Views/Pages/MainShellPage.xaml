@@ -22,33 +22,33 @@
     <TabBar>
         <Tab Title="Home">
             <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Home}" Size="Small"/>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Home}" Size="Large"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:Pages.FeedPage}" />
         </Tab>
         
         <Tab Title="Watch">
             <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.MusicCircle}" Size="Small"/>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.MusicCircle}" Size="Large"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:Media.MediaPage}" />
         </Tab>
         <Tab Title="Give">
             <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Cash}" Size="Small"/>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Cash}" Size="Large"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:Giving.GivePage}" />
         </Tab>
-        <Tab Title="Group Chat">
+        <!--<Tab Title="Group Chat">
             
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.Wechat}" Size="Small"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:Pages.GroupChatPage}" />
-        </Tab>
+        </Tab>-->
         <Tab Title="More">
             <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.More}" Size="Small"/>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{x:Static fonticons:FontIcons.More}" Size="Large"/>
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate local:Authentication.ProfilePage}" />
         </Tab>

@@ -6,6 +6,8 @@ namespace ChurchMemberApp.Models.Response
 {
     public class ChurchMedia
     {
+        
+
         public string id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -17,8 +19,8 @@ namespace ChurchMemberApp.Models.Response
         public bool @public { get; set; }
         public int viewCount { get; set; }
         public int downloadCount { get; set; }
-        public int sortOrder { get; set; }
-        public double price { get; set; }
+        public int? sortOrder { get; set; }
+        public double? price { get; set; }
         public string fileBlobName { get; set; }
         public string imageBlobName { get; set; }
         public bool isFree { get; set; }

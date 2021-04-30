@@ -1,4 +1,6 @@
-﻿using ChurchMemberApp.Views.Authentication;
+﻿using ChurchMemberApp.Models.Response;
+using ChurchMemberApp.ViewModel.Giving;
+using ChurchMemberApp.Views.Authentication;
 using ChurchMemberApp.Views.Media;
 using ChurchMemberApp.Views.Pages;
 using System;
@@ -12,48 +14,38 @@ namespace ChurchMemberApp.Views.Giving
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddPaymentMethodPage : ContentPage
     {
+        ContributionItemVM vm;
         public AddPaymentMethodPage()
         {
             InitializeComponent();
         }
+        public AddPaymentMethodPage(PaymentForm model)
+        {
+            InitializeComponent();
+            BindingContext = vm = new ContributionItemVM(model);
+        }
+
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             med.Opacity = 0;
-            await med.FadeTo(1, 1000);
-            active.Opacity = 0;
-            await Task.WhenAny<bool>
-            (
-                active.FadeTo(1, 2000),
-                active.TranslateTo(0, 0, 2000)
-            );
+            await med.FadeTo(1, 600);
+           
         }
 
-        void Button_Clicked(System.Object sender, System.EventArgs e)
-        {
-            App.Current.MainPage.Navigation.PushAsync(new GiveTowardsPage());
-        }
-
-        private void home_Tapped(object sender, EventArgs e)
-        {
-            App.Current.MainPage = new NavigationPage(new FeedPage());
-        }
-
-        private void media_Tapped(object sender, EventArgs e)
-        {
-            App.Current.MainPage = new NavigationPage(new MediaPage());
-        }
-
-        private void profile_Tapped(object sender, EventArgs e)
-        {
-            App.Current.MainPage = new NavigationPage(new ProfilePage());
-        }
 
         protected override bool OnBackButtonPressed()
         {
             base.OnBackButtonPressed();
             return true;
         }
+
+        private async void back_Tapped(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("../..");
+        }
+
+       
     }
 }

@@ -29,56 +29,35 @@ x:Class="ChurchMemberApp.Views.Media.PlayVideoPage">
             </Grid>
             <ScrollView>
                 <StackLayout Margin="20">
-                <Label Text="Faith that works" x:Name="title" TextColor="Black" FontFamily="BoldFont" FontSize="18" />
-                <Label Text="Pastor A.O Ayo" x:Name="author" TextColor="#FF6E20" FontFamily="MediumFont" FontSize="14" />
+                    <Label Text="Faith that works" x:Name="title" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="BoldFont" FontSize="18" />
+                    <Label Text="" x:Name="author" TextColor="{AppThemeBinding Light=#FF6E20, Dark=White}" FontFamily="MediumFont" FontSize="14" />
 
                 <StackLayout Orientation="Horizontal" Spacing="20" Margin="0,20,0,30">
-                    <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
-                        <Label Text="&#xf004;" FontFamily="FontIcon" TextColor="Red" VerticalOptions="Center" HorizontalOptions="Center" />
+                        <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="{AppThemeBinding Light=#F1E4E4, Dark=Black}">
+                        <Label Text="&#xf004;" FontFamily="FontIcon" TextColor="#FF6E20" VerticalOptions="Center" HorizontalOptions="Center" />
                     </Frame>
 
                     <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
-                        <Label Text="&#xf019;" FontFamily="FontIcon" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
+                            <Label Text="&#xf019;" FontFamily="FontIcon" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Center" HorizontalOptions="Center" />
                     </Frame>
 
                     <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
-                        <Label Text="&#xf075;" FontFamily="FontIcon" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
+                            <Label Text="&#xf075;" FontFamily="FontIcon" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Center" HorizontalOptions="Center" />
                     </Frame>
 
                     <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
-                        <Label Text="&#xf14d;" FontFamily="FontIcon" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
+                            <Label Text="&#xf14d;" FontFamily="FontIcon" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Center" HorizontalOptions="Center" />
                     </Frame>
                 </StackLayout>
 
                 <Label x:Name="date" Text="January 23rd, 2021" TextColor="Gray" Margin="0,30,0,20" FontFamily="MediumFont" />
-                <Label Text="" x:Name="description" TextColor="Black" FontFamily="LightFont" FontSize="14" />
+                    <Label Text="" x:Name="description" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="LightFont" FontSize="14" />
 
-                <Label Text=" Comments" FontFamily="BoldFont" TextColor="Black" Margin="0,20,0,0"/>
-                <BoxView HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="Start" WidthRequest="150" />
-
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" Margin="0,20,0,0">
-                    <Frame HasShadow="False" CornerRadius="10" Padding="0" WidthRequest="40" HeightRequest="40"  VerticalOptions="Start">
-                        <Image Source="start.png" Aspect="Fill" />
-                    </Frame>
-
-                    <!--<Label Grid.Column="1" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                           " FontSize="12" FontFamily="LightFont" TextColor="Black" />-->
-                </Grid>
+                
             </StackLayout>
             </ScrollView>
 
-            <pv:PancakeView BackgroundColor="White" CornerRadius="10,10,0,0" VerticalOptions="End" HeightRequest="40">
-                <pv:PancakeView.Shadow>
-                    <pv:DropShadow Color="Black" BlurRadius="10" Offset="0,0"/>
-                </pv:PancakeView.Shadow>
-
-                <Frame CornerRadius="10" HeightRequest="30" HasShadow="False" Padding="0" BackgroundColor="#FEFEFE">
-                    <Grid ColumnDefinitions="*,Auto" Margin="15,0">
-                        <Entry Placeholder="Add a comment" FontFamily="LightFont" />
-                        <Label Text="&#xf1d8;" Grid.Column="1" TextColor="Black" FontFamily="FontIcon" VerticalOptions="Center" />
-                    </Grid>
-                </Frame>
-            </pv:PancakeView>
+           
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

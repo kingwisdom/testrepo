@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ChurchMemberApp.Views.Contact.AboutDetailPage" NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <Style TargetType="StackLayout">
@@ -22,9 +22,9 @@
     <ContentPage.Content>
         <ScrollView>
             <Grid RowDefinitions="Auto,Auto">
-                <Image Source="https://static01.nyt.com/images/2020/03/15/us/15virus-nochurch01/15virus-nochurch01-articleLarge.jpg" Aspect="Fill" WidthRequest="300" HeightRequest="250"/>
+                <ffimageloading:CachedImage Source="https://thepottershouseoflagos.org/wp-content/uploads/2020/05/full-front-viewB-scaled.jpg" Aspect="Fill" WidthRequest="300" HeightRequest="250"/>
                 <BoxView BackgroundColor="Black" Opacity="0.8" />
-                <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="Black" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
+                <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="White" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
                     </Label.GestureRecognizers>

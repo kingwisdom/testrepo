@@ -1,22 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<zxing:ZXingScannerPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
-             x:Class="ChurchMemberApp.Views.Pages.AttendanceWithBarcodePage" NavigationPage.HasNavigationBar="False" OnScanResult="scanView_OnScanResult" IsScanning="true">
-    
-   
-        <!--<Grid VerticalOptions="CenterAndExpand"
-              HorizontalOptions="CenterAndExpand" BackgroundColor="#000">
-            <zxing:ZXingScannerView x:Name="scanView"
-                                        OnScanResult="scanView_OnScanResult"
-                                     IsTorchOn="True"
-                                     IsAnalyzing="True"
-                                    IsTabStop="True"
-                                        IsScanning="True"
-                                        WidthRequest="500"
-                                        HeightRequest="500"
-                                        VerticalOptions="CenterAndExpand"
-                                        HorizontalOptions="CenterAndExpand"/>
-            <zxing:ZXingDefaultOverlay TopText="Align the barcode within the frame"/>
-        </Grid>-->
-   
-</zxing:ZXingScannerPage>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="ChurchMemberApp.Views.Pages.AttendanceWithBarcodePage" NavigationPage.HasNavigationBar="False">
+
+    <Grid BackgroundColor="DarkGray" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Frame BackgroundColor="White" CornerRadius="25" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="450" WidthRequest="250">
+            <StackLayout Spacing="15">
+                <Label FontFamily="BoldFont" Text="QR Scan Instructions" TextColor="Black" HorizontalTextAlignment="Center" />
+                <BoxView HeightRequest="1" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="Center" WidthRequest="100" />
+                <Label TextColor="Black">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="&#x000f063b;" FontFamily="MaterialIcons" FontSize="18" />
+                            <Span Text=" " />
+                            <Span Text="Click on the Scan and Check in button below" FontFamily="LightFont" FontSize="14" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label TextColor="Black">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="&#x000f063b;" FontFamily="MaterialIcons" FontSize="18" />
+                            <Span Text=" " />
+                            <Span Text="Align the RED line on the Qrcode for a moment" FontFamily="LightFont" FontSize="14" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label TextColor="Black">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="&#x000f063b;" FontFamily="MaterialIcons" FontSize="18" />
+                            <Span Text=" " />
+                            <Span Text="Scan the code to mark your attendant for this event" FontFamily="LightFont" FontSize="14" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Text="GOOD LUCK" FontFamily="BoldFont" HorizontalTextAlignment="Center" />
+            
+
+                <Button Style="{StaticResource Buttons}" BackgroundColor="{DynamicResource PrimaryColor}" Text="Scan and Check In" Margin="0,25,0,10" Clicked="Button_Clicked" />
+                <Button Style="{StaticResource Buttons}" BackgroundColor="{DynamicResource GrayColor}" Text="Cancel" x:Name="cancel" Clicked="cancel_Clicked" />
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

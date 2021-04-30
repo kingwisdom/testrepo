@@ -16,6 +16,7 @@ namespace ChurchMemberApp.ViewModel.Authentication
     {
         public LoginViewModel()
         {
+            IsNotBusy = true;
         }
         private string _name;
 
@@ -56,8 +57,8 @@ namespace ChurchMemberApp.ViewModel.Authentication
 
             var login = new Login
             {
-                email = Email,
-                password = Password
+                email = Email.Trim(),
+                password = Password.Trim()
             };
 
             try
@@ -65,20 +66,23 @@ namespace ChurchMemberApp.ViewModel.Authentication
                 ApiServices services = new ApiServices();
                 await PopupNavigation.PushAsync(new Indicator());
                 var response = await ApiServices.Login(login);
-                if(response == null)
+                if(!response.status)
                 {
-                    MessageDialog.Show("Error!", "Problem in loging in, please check your details and try again", "Cancel");
+                    MessageDialog.Show("", response.response, "Cancel");
+                    await PopupNavigation.PopAsync();
                     return;
                 }
-                var r = response.expiryTime;
+                var r = response.returnObject.expiryTime;
                 long longTime = r.Ticks;
 
-                Preferences.Set("token", response.token);
-                Preferences.Set("userId", response.userId);
-                Preferences.Set("userName", response.username);
-                Preferences.Set("fullName", response.fullname);
+                Preferences.Set("token", response.returnObject.token);
+                Preferences.Set("userId", response.returnObject.userId);
+                Preferences.Set("userName", response.returnObject.email);
+                Preferences.Set("fullName", response.returnObject.fullname);
                 Preferences.Set("tokenExpirationTime", longTime);
                 Preferences.Set("currentTime", UnixTime.GetCurrentTime());
+
+                await ApiServices.GetAllPostCategory();
 
                 await services.GetAllChurchFeeds(App.AppKey, Preferences.Get("userId", string.Empty));
                 await PopupNavigation.PopAsync();
@@ -87,43 +91,58 @@ namespace ChurchMemberApp.ViewModel.Authentication
             catch (Exception er)
             {
                 await PopupNavigation.PopAsync();
-                MessageDialog.Show("Error!", er.Message, "Cancel");
+                MessageDialog.Show("Error!", "Invalid email or password", "Cancel");
             }
             
         });
         [Obsolete]
         public ICommand RegisterCommand => new Command(async() =>
         {
+            IsBusy = true;
+            IsNotBusy = false;
+            
+            //if (string.IsNullOrEmpty(Email) && string.IsNullOrWhiteSpace(Phone) && Phone.Length <11)
+            //{
+            //    MessageDialog.Show("Error!", "Please fill your Email and Phone Number and continue", "Ok");
+            //    IsBusy = false;
+            //    return;
+            //}
             var register = new Register
             {
                 name = Name,
                 tenantID = App.AppKey,
-                email = Email,
-                password = Password,
-                phoneNumber = Phone
+                email = Preferences.Get("newEmail",string.Empty).Trim(),
+                password = Password.Trim(),
+                phoneNumber = Preferences.Get("newPhone", string.Empty)
             };
 
             try
             {
-                await PopupNavigation.PushAsync(new Indicator());
+                //await PopupNavigation.PushAsync(new Indicator());
                 var response = await ApiServices.Register(register);
-                if (response != null)
+                if (response.status)
                 {
-                    await PopupNavigation.PopAsync();
-                    await App.Current.MainPage.Navigation.PopAsync();// = new FeedPage();
+                    IsBusy = false;
+                    //await PopupNavigation.PopAsync();
+                    MessageDialog.Show("Success", response.response, "Ok");
+                    await App.Current.MainPage.Navigation.PopModalAsync();// = new FeedPage();
                 }
                 else
                 {
-                    await PopupNavigation.PopAsync();
-                    MessageDialog.Show("Error!", "Error occured from the service please try again later", "Cancel");
+                    //await PopupNavigation.PopAsync();
+                    IsBusy = false;
+                    MessageDialog.Show("", response.response, "Cancel");
+                    await App.Current.MainPage.Navigation.PopModalAsync();
                 }
             }
             catch (Exception er)
             {
-                await PopupNavigation.PopAsync();
-                MessageDialog.Show("Error!", er.Message, "Cancel");
+                IsBusy = false;
+                await App.Current.MainPage.Navigation.PopModalAsync();
+                //MessageDialog.Show("Error!", er.Message, "Cancel");
             }
-            
+
+            IsNotBusy = true;
         });
         
     }

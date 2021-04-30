@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:converters="clr-namespace:ChurchMemberApp.Converters"
              x:Class="ChurchMemberApp.Views.Contact.AboutChurchPage" NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <Style TargetType="Grid">
@@ -18,13 +18,14 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
+        <converters:LabelMaxLengthConverter x:Key="LabelMaxLengthConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
             <Grid RowDefinitions="Auto,Auto">
                 <Image Source="https://static01.nyt.com/images/2020/03/15/us/15virus-nochurch01/15virus-nochurch01-articleLarge.jpg" Aspect="Fill" WidthRequest="300" HeightRequest="250"/>
                 <BoxView BackgroundColor="Black" Opacity="0.8" />
-                <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="Black" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
+                <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="White" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
                     </Label.GestureRecognizers>
@@ -32,26 +33,33 @@
 
                 <Label Text="{Binding ChurchName}" TextColor="White" FontFamily="MediumFont" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
 
-                <pv:PancakeView CornerRadius="20,20,0,0" BackgroundColor="White" Margin="0,-40,0,0" Grid.Row="1">
+                <pv:PancakeView CornerRadius="20,20,0,0" BackgroundColor="{AppThemeBinding Light=White, Dark=Black}" Margin="0,-40,0,0" Grid.Row="1">
                     <StackLayout Margin="15,20,15,0" Spacing="25">
-                        <Label Text="About Us" TextColor="Black" FontFamily="BoldFont" FontSize="18" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="About Us" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="BoldFont" FontSize="18" />
+                            <!--<Label Text="Refresh" TextColor="Black" FontFamily="LightFont" FontSize="14" HorizontalOptions="End" VerticalOptions="Center">
+                                
+                            </Label>-->
+
+                        </StackLayout>
                         <Button Text="View Details" BackgroundColor="{DynamicResource DangerColor}" BorderColor="Transparent" TextColor="White" FontFamily="MediumFont" CornerRadius="20" x:Name="about" Clicked="about_Clicked"/>
 
-                        <Label Text="Our Leaders" TextColor="Black" FontSize="18" FontFamily="BoldFont"/>
+                        <Label Text="Our Leaders" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" FontFamily="BoldFont"/>
                         <CollectionView ItemsSource="{Binding Pastors}" Margin="0,15,0,0" SelectedItem="SelectedPastor" SelectionMode="Single" SelectionChanged="CollectionView_SelectionChanged" HeightRequest="120">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10" Padding="0,5">
                                         <Frame CornerRadius="10" HeightRequest="40" WidthRequest="40" IsClippedToBounds="True" Padding="0">
                                             <Image Source="http://assets.stickpng.com/images/585e4bcdcb11b227491c3396.png" Aspect="AspectFit" />
                                         </Frame>
-                                        <StackLayout Grid.Row="1">
-                                            <Label Text="{Binding name}" FontSize="11" FontFamily="BoldFont" />
-                                            <Label Text="{Binding branch}" FontSize="11" FontFamily="MediumFont" />
-                                        </StackLayout>
+                                        <Grid Grid.Row="1">
+                                            <Label Text="{Binding name, Converter={StaticResource LabelMaxLengthConverter}}" FontSize="14" FontFamily="BoldFont" 
+                                                   LineBreakMode="TailTruncation" />
+                                            <!--<Label Grid.Row="1" Text="Main" FontSize="11" FontFamily="MediumFont" />-->
+                                        </Grid>
                                         <StackLayout Orientation="Horizontal" Spacing="5" Grid.Row="2" HorizontalOptions="Center">
                                             <Label Text="&#x000f020c;" FontFamily="MaterialIcons" TextColor="Black" />
                                             <Label Text="&#x000f0544;" FontFamily="MaterialIcons" TextColor="Black" />
@@ -63,27 +71,40 @@
                         </CollectionView>
 
 
-                        <Label Text="Contact" TextColor="Black" FontSize="18" FontFamily="BoldFont"/>
+                        <Label Text="Contact" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" FontFamily="BoldFont"/>
                         <StackLayout Orientation="Horizontal" Spacing="20">
                             <Label Text="&#x000f034e;" TextColor="{DynamicResource DarkColor}" FontSize="24" FontFamily="MaterialIcons" />
-                            <Label Text="{Binding Address}" FontFamily="LightFont" FontSize="14" />
+                            <!--<Label Text="{Binding Address}" FontFamily="LightFont" FontSize="14" />-->
+                            <Label Text="117/119 FUNSHO WILLIAMS AVENUE. SURULERE LAGOS NIGERIA" x:Name="address" FontFamily="LightFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="14">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="addressTap" NumberOfTapsRequired="1" Tapped="addressTap_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </StackLayout> 
                         <BoxView BackgroundColor="{DynamicResource DarkColor}" HeightRequest="1" Opacity="0.5" />
 
                         <StackLayout Orientation="Horizontal" Spacing="20">
                             <Label Text="&#x000f01ee;" TextColor="{DynamicResource DarkColor}" FontSize="24" FontFamily="MaterialIcons" />
-                            <Label Text="{Binding Email}" FontFamily="LightFont" FontSize="14" />
+                            <Label Text="info@thepottershouseoflagos.org" x:Name="email" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="LightFont" FontSize="14" />
+                            <!--<Label Text="{Binding Email}" FontFamily="LightFont" FontSize="14" />-->
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="emailTap" NumberOfTapsRequired="1" Tapped="email_Tapped" />
+                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                         <BoxView BackgroundColor="{DynamicResource DarkColor}" HeightRequest="1" Opacity="0.5" />
 
                         <StackLayout Orientation="Horizontal" Spacing="20">
                             <Label Text="&#x000f03f2;" TextColor="{DynamicResource DarkColor}" FontSize="24" FontFamily="MaterialIcons" />
-                            <Label Text="{Binding Phone}" FontFamily="LightFont" FontSize="14" />
+                            <Label Text="09060000139" x:Name="phone" FontFamily="LightFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="14" />
+                            <!--<Label Text="{Binding Phone}" FontFamily="LightFont" FontSize="14" />-->
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="phoneTap" NumberOfTapsRequired="1" Tapped="phoneTap_Tapped" />
+                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                         <BoxView BackgroundColor="{DynamicResource DarkColor}" HeightRequest="1" Opacity="0.5" />
 
 
-                        <Label Text="Account Details" TextColor="Black" FontSize="18" FontFamily="BoldFont"/>
+                        <Label Text="Account Details" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" FontFamily="BoldFont"/>
 
                         <CollectionView ItemsSource="{Binding Banks}" HeightRequest="120">
                             <CollectionView.ItemsLayout>

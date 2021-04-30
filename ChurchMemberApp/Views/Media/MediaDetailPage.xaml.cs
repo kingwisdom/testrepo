@@ -35,25 +35,21 @@ namespace ChurchMemberApp.Views.Media
             InitializeComponent();
             this.BindingContext = new MediaDetailVM(model);
             media = model;
-            //MessagingCenter.Subscribe<ActiveSubDialog>(this, "PushtoPayment", (args) =>
-            //{
-            //    Navigation.PushAsync(new SubscriptionPage());
-            //});
-
+            
         }
 
         
 
         private async void back_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         private async void play_Tapped(object sender, EventArgs e)
         {
             if(media.mediaType == MediaType.Video)
             {
-                await Navigation.PushModalAsync(new PlayVideoPage(media));
+                await Navigation.PushModalAsync(new VLCPage(media));
                 return;
             }
             await Navigation.PushModalAsync(new PlayAudioPage(media, "dd"));
@@ -95,6 +91,7 @@ namespace ChurchMemberApp.Views.Media
             //        await Navigation.PushPopupAsync(new AuthenticationDialog());
             //    }
             //}
+            //((CollectionView)sender).SelectedItem = null;
         }
 
         private void download_Clicked(object sender, EventArgs e)

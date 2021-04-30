@@ -1,4 +1,5 @@
-﻿using ChurchMemberApp.ViewModel.Pages;
+﻿using ChurchMemberApp.Models.Response;
+using ChurchMemberApp.ViewModel.Pages;
 
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,16 @@ namespace ChurchMemberApp.Views.Popups
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Picturepopup : Rg.Plugins.Popup.Pages.PopupPage
     {
-        CreatePostViewModel vm;
-        public Picturepopup(string source)
+        public Picturepopup(ChurchMedia media)
         {
             InitializeComponent();
-            image.Source = source;
-            BindingContext = new CreatePostViewModel();
-            MessagingCenter.Subscribe<CreatePostViewModel, string>(this, "Pic", (sender, args) =>
-              {
-                  image.Source = args;
-              });
+            image.Source = media.filePath;
+            
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("../..");
         }
     }
 }

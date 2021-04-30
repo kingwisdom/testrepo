@@ -1,10 +1,12 @@
 ﻿using ChurchMemberApp.Models.Request;
 using ChurchMemberApp.Models.Response;
+using ChurchMemberApp.Platform;
 using ChurchMemberApp.Services;
 using ChurchMemberApp.Views.Pages;
 using ChurchMemberApp.Views.Popups;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Rg.Plugins.Popup.Extensions;
@@ -22,8 +24,11 @@ using Xamarin.Forms;
 
 namespace ChurchMemberApp.ViewModel.Pages
 {
+   
     public class CreatePostViewModel : BaseViewModel
-    {
+    { 
+        
+        Imessaging message { get; set; }
         ObservableCollection<GetPostCategory> Gets;
         public CreatePostViewModel()
         {
@@ -31,6 +36,7 @@ namespace ChurchMemberApp.ViewModel.Pages
             AllCategory();
             Gets = new ObservableCollection<GetPostCategory>();
             Categories = Gets;
+            message = DependencyService.Get<Imessaging>();
         }
         private int postIndex = -1;
         public int PostIndex
@@ -49,13 +55,7 @@ namespace ChurchMemberApp.ViewModel.Pages
             get { return content; }
             set { content = value; }
         }
-        private string mediaUrl;
-
-        public string MediaUrl
-        {
-            get { return mediaUrl; }
-            set { mediaUrl = value; }
-        }
+       
 
         string picture;
         public string Picture
@@ -94,7 +94,7 @@ namespace ChurchMemberApp.ViewModel.Pages
         public string PicturePath
         {
             get { return _picturepath; }
-            set {_picturepath = value; OnPropertyChanged();}
+            set { _picturepath = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<GetPostCategory> category;
@@ -105,113 +105,97 @@ namespace ChurchMemberApp.ViewModel.Pages
         }
 
 
-       private async void AllCategory()
-        {
-            var res = await ApiServices.GetAllPostCategory();
-            foreach (var item in res)
+       private void AllCategory()
+       {
+          //await ApiServices.GetAllPostCategory();
+            var response = Preferences.Get("PostCategory", string.Empty);
+            var church = JsonConvert.DeserializeObject<List<GetPostCategory>>(response);
+            if (church != null)
             {
-                Gets.Add(item);
+                foreach (var item in church)
+                {
+                    Gets.Add(item);
+                }
             }
         }
 
-        //if (categoryIndex > -1)
-        //        transactions.Category = Category[categoryIndex].Title;
-        //    var result = await service.AddTransactionAsync(transactions);
+        public ICommand GetCategoryCommand => new Command(async() => 
+        {
+            var res = await ApiServices.GetAllPostCategory();
+            if(res != null)
+            {
+
+            }
+        });
+
+        private MediaFile _mediaFile;
+        private string URL { get; set; }
+
         [Obsolete]
         public ICommand TakePicture => new Command(async () => 
         {
             await PopupNavigation.PopAsync();
             await CrossMedia.Current.Initialize();
-
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                await App.Current.MainPage.DisplayAlert("No Camera", ":( No camera available.", "OK");
+                await App.Current.MainPage.DisplayAlert("No Camera", ":(No Camera available.)", "OK");
                 return;
             }
-
-            _mediaFile = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            else
             {
-                Directory = "Samplepics",
-                Name = "test.jpg"
-            });
+                _mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                {
+                    Directory = "Sample",
+                    Name = "myImage.jpg"
+                });
 
-            if (_mediaFile == null)
-                return;
+                if (_mediaFile == null) return;
+                source = ImageSource.FromStream(() => _mediaFile.GetStream());
+                var mediaOption = new PickMediaOptions()
+                {
+                    PhotoSize = PhotoSize.Medium
+                };
+                PicturePath = "Image URL:";
+            }
 
-            // await App.Current.MainPage.DisplayAlert("File Location", file.Path, "OK");
-            source = ImageSource.FromStream(() => _mediaFile.GetStream());
-            //source = ImageSource.FromStream(() =>
-            //{
-            //    var stream = file.GetStream();
-            //    return stream;
-            //});
+            UploadImage(_mediaFile.GetStream());
 
-           // UploadImage(_mediaFile.GetStream());
-            //Picture = _mediaFile.Path;
         });
 
-
-        public ICommand PickPicture => new Command(async() => takePicture());
-        private MediaFile _mediaFile;
-        public string URL { get; set; }
+        [Obsolete]
+        public ICommand PickPicture => new Command(async() => pickPicture());
+        
 
         [Obsolete]
-        private async void takePicture()
+        private async void pickPicture()
         {
             try
             {
                 await PopupNavigation.PopAsync();
                 await CrossMedia.Current.Initialize();
 
-                if (!CrossMedia.Current.IsTakePhotoSupported)
+                if (!CrossMedia.Current.IsPickPhotoSupported)
                 {
-                    await Application.Current.MainPage.DisplayAlert("", "You cant't take photo with this phone!.", "OK");
+                    await App.Current.MainPage.DisplayAlert("Error", "This is not support on your device.", "OK");
                     return;
                 }
-                var status = await Permissions.RequestAsync<Permissions.StorageRead>();
-                await Permissions.RequestAsync<Permissions.StorageWrite>();
-               // var status1 = await Permissions.RequestAsync<Permissions.Camera>();
-                //var mediaOptions = new StoreCameraMediaOptions();
-
-                if (status == PermissionStatus.Granted)
+                else
                 {
+
                     var mediaOption = new PickMediaOptions()
                     {
-                        PhotoSize = PhotoSize.Medium
+                        PhotoSize = PhotoSize.Full
                     };
-                    _mediaFile = await CrossMedia.Current.PickPhotoAsync(mediaOption);
-                    if (_mediaFile == null) return;
+                    _mediaFile = await CrossMedia.Current.PickPhotoAsync();
 
+                    if (_mediaFile == null) return;
                     source = ImageSource.FromStream(() => _mediaFile.GetStream());
                     
-                    //picturestream = _mediaFile.GetStream();
-                     
-                    //UploadImage(_mediaFile.GetStream());
-                    // VideoPath = null;
-                    Picture = _mediaFile.Path;
-
-                    //source = ImageSource.FromStream(() =>
-                    //{
-                    //    picturestream = selectedImageFile.GetStream();
-                    //    selectedImageFile.Dispose();
-                    //    return picturestream;
-                    //});
-                    if (source == null)
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Error", "Could not take the picture, please try again.", "Ok");
-                        return;
-                    }
-                    else
-                    {
-                        //await Application.Current.MainPage.DisplayAlert("Picture Selected", PicturePath, "OK");
-                        //MessagingCenter.Send(this, "Pic", picture);
-                        //IsPicture = true;
-                    }
-                    //isbusy = false;
+                    PicturePath = "Image URL:";
                 }
 
+                UploadImage(_mediaFile.GetStream());
 
-                //source = ImageSource.FromStream(() => picturestream);
 
             }
             catch (Exception ex)
@@ -220,100 +204,74 @@ namespace ChurchMemberApp.ViewModel.Pages
             }
         }
 
-        //Upload to blob function    
-        static string _storageConnection = "DefaultEndpointsProtocol=https;AccountName=churchplusstorage;AccountKey=rQZhE5UYZ9EdgzVZvr3bXLMNYEuoQG3jGW71uQFVeKxI+YR3iBlRyLWMxqOGTT83L3/6jRBH8uSSZkC3oJ+duA==;EndpointSuffix=core.windows.net";
-        static CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(_storageConnection);
-        static CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
-        static CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("churchpluscore");
-
         private async void UploadImage(Stream stream)
         {
-            //var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=churchplusstorage;AccountKey=rQZhE5UYZ9EdgzVZvr3bXLMNYEuoQG3jGW71uQFVeKxI+YR3iBlRyLWMxqOGTT83L3/6jRBH8uSSZkC3oJ+duA==;EndpointSuffix=core.windows.net");
-            //var client = account.CreateCloudBlobClient();
-            //var container = client.GetContainerReference("churchpluscore");
-            //await container.CreateIfNotExistsAsync();
-            //var name = Guid.NewGuid().ToString();
-            //var blockBlob = container.GetBlockBlobReference(name+Picture);
-            //await blockBlob.UploadFromStreamAsync(stream);
-            //URL = blockBlob.Uri.OriginalString;
-            //Picture = URL;
-
-            try
-            {
-                string filePath = _mediaFile.Path;
-                string fileName = Path.GetFileName(filePath);
-                await cloudBlobContainer.CreateIfNotExistsAsync();
-
-                await cloudBlobContainer.SetPermissionsAsync(new BlobContainerPermissions
-                {
-                    PublicAccess = BlobContainerPublicAccessType.Blob
-                });
-                var blockBlob = cloudBlobContainer.GetBlockBlobReference(fileName);
-                await Upload(blockBlob, filePath);
-            }
-            catch (StorageException e)
-            {
-                await App.Current.MainPage.DisplayAlert("",e.Message,"Ok");
-            }
-
-            //await DisplayAlert("Uploaded", "Image uploaded to Blob Storage Successfully!", "OK");
+            IsBusy = true;
+            var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=churchplusstorage;AccountKey=rQZhE5UYZ9EdgzVZvr3bXLMNYEuoQG3jGW71uQFVeKxI+YR3iBlRyLWMxqOGTT83L3/6jRBH8uSSZkC3oJ+duA==;EndpointSuffix=core.windows.net");
+            var client = account.CreateCloudBlobClient();
+            var container = client.GetContainerReference("churchpluscore");
+            await container.CreateIfNotExistsAsync();
+            var name = Guid.NewGuid().ToString();
+            var blockBlob = container.GetBlockBlobReference($"{name}.png");
+            await blockBlob.UploadFromStreamAsync(stream);
+            URL = blockBlob.Uri.OriginalString;
+            PicturePath = URL;
+            Preferences.Set("picUrl", URL);
+            IsBusy = false;
+            await App.Current.MainPage.DisplayAlert("Uploaded", "Image uploaded to Blob Storage Successfully!", "OK");
         }
 
-        private async Task Upload(CloudBlockBlob blob, string filePath)
+
+
+        private async void UploadVideo(Stream stream)
         {
-            using (var fileStream = File.OpenRead(filePath))
+
+            var account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=churchplusstorage;AccountKey=rQZhE5UYZ9EdgzVZvr3bXLMNYEuoQG3jGW71uQFVeKxI+YR3iBlRyLWMxqOGTT83L3/6jRBH8uSSZkC3oJ+duA==;EndpointSuffix=core.windows.net");
+            var client = account.CreateCloudBlobClient();
+            var container = client.GetContainerReference("churchpluscore");
+            await container.SetPermissionsAsync(new BlobContainerPermissions
             {
-                await blob.UploadFromStreamAsync(fileStream);
-            }
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            });
+            await container.CreateIfNotExistsAsync();
+            var name = Guid.NewGuid().ToString();
+            var blockBlob = container.GetBlockBlobReference($"{name}.mp4");
+            await blockBlob.UploadFromStreamAsync(stream);
+            URL = blockBlob.Uri.OriginalString;
+            VideoPath = URL;
+            Preferences.Set("picUrl", URL);
+            //NotBusy();
+            await App.Current.MainPage.DisplayAlert("Uploaded", "Video uploaded Successfully!", "OK");
         }
 
-        public ICommand ViewPicture => new Command(async () =>
-        {
-            if (picture != null)
-            {
-                await App.Current.MainPage.Navigation.PushPopupAsync(new Picturepopup(picture));
-            }
-            else
-            {
-                //take picture
-                takePicture();
-            }
-        });
+        
         public ICommand PostCommand => new Command(async () =>
         {
             IsBusy = true;
             IsNotBusy = false;
             try
             {
-
-                if(_mediaFile == null)
-                {
-                    return;
-                }
-
                 var post = new UserPostRequest
                 {
-                    title = "Post from mobile",
+                    title = "New Post from mobile",
                     content = Content,
-                    mediaUrl = MediaUrl,
-                    
+                    mediaUrl = Preferences.Get("picUrl",string.Empty),
                     tenantId = App.AppKey,
                     //image = Picture
                 };
 
+                //UploadImage(_mediaFile.GetStream());
                 if (postIndex > -1)
                 {
                     post.postCategoryId = Categories[postIndex].postCategoryId;
                 }
 
-
                 var res = await ApiServices.UserPost(post);
                 if (res)
                 {
-                    if(_mediaFile.GetStream() != null)
-                        UploadImage(_mediaFile.GetStream());
-                    MessageDialog.Show("Add Post", "Your Post has been saved successfully", "Ok");
-                    App.Current.MainPage = new FeedPage();
+                    //MessageDialog.Show("Add Post", "Your Post has been saved successfully", "Ok");
+                    message.LongAlert("Your Post has been saved successfully");
+                    await Shell.Current.GoToAsync("../..");
                 }
                 else
                 {
@@ -345,14 +303,14 @@ namespace ChurchMemberApp.ViewModel.Pages
                 Quality = VideoQuality.Medium
             });
 
-            //Get the public album path
+
 
             if (_mediaFile == null)
                 return;
             var stream = _mediaFile.GetStream();
             VideoPath = _mediaFile.AlbumPath;
 
-            UploadImage(stream);
+            UploadVideo(stream);
             //await App.Current.MainPage.DisplayAlert("File Location", file.AlbumPath, "OK");
         });
     }

@@ -18,13 +18,17 @@ namespace ChurchMemberApp.Views.Authentication
 
         void register_Tapped(System.Object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new RegisterPage());
+            Navigation.PushModalAsync(new InitialSignupPage());
         }
 
         private async void close_Tapped(object sender, EventArgs e)
         {
-            //await Navigation.PopModalAsync();
             await Shell.Current.GoToAsync("../..");
+        }
+
+        private void forgot_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new ForgotPasswordPage());
         }
     }
 }

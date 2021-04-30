@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:ChurchMemberApp.Converters"
-             xmlns:sk="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton" xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              xmlns:touch="clr-namespace:TouchEffect;assembly=TouchEffect"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:sk="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton" xmlns:local="clr-namespace:ChurchMemberApp.ViewModel" xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
              ios:Page.UseSafeArea="True" x:Class="ChurchMemberApp.Views.Pages.FeedPage" NavigationPage.HasNavigationBar="False" x:Name="Page">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -22,7 +26,9 @@
             <Grid RowDefinitions="Auto,*,Auto">
                     
                 <Grid BackgroundColor="#FFFFFF" Padding="15,3" Margin="0,10,0,20">
+                    <StackLayout>
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="20">
+                        
                         <Frame CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0" IsClippedToBounds="True" VerticalOptions="Start" HasShadow="False">
                                 <Image Source="start.png" Aspect="Fill" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Frame.GestureRecognizers>
@@ -33,43 +39,80 @@
                         <Frame Grid.Column="1" BackgroundColor="#eee" BorderColor="LightGray" CornerRadius="20" HeightRequest="20" Padding="15,0" HasShadow="False">
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                                 <Label VerticalOptions="Center" Text="&#xf002;" FontFamily="FontIcon" FontAttributes="Bold"/>
-                                <Entry Placeholder="Search" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" />
-
+                                <Entry Placeholder="Search" VerticalOptions="Center" VerticalTextAlignment="Center" x:Name="search" TextChanged="search_TextChanged" HorizontalOptions="FillAndExpand" />
                             </StackLayout>
                         </Frame> 
                         
                     </Grid>
+                        <Grid IsVisible="{Binding SearchlistIsvisible}"  HeightRequest="200">
+                            <ListView 
+                              x:Name="listview"
+                                  ItemsSource="{Binding SearhList}" 
+                                  ItemSelected="ListView_ItemSelected">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout IsEnabled="True" Padding="15">
+                                                <Label Text="{Binding content}" MaxLines="1" LineBreakMode="TailTruncation" FontFamily="LightFont" TextColor="Black" />
+
+                                            </StackLayout>
+                                        </ViewCell>
+
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </StackLayout>
                 </Grid>
-                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="True" WidthRequest="25" HeightRequest="25" Color="Orange" VerticalOptions="Center" HorizontalOptions="Center" />
-                <ScrollView Grid.Row="1">
-                    <!--<RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">-->
-                        <CollectionView ItemsSource="{Binding Feeds}" SelectedItem="{Binding SelectFeed}"
-                                    sk:Skeleton.IsBusy="True" sk:Skeleton.IsParent="True" sk:Skeleton.Animation="{sk:DefaultAnimation Fade}" SelectionChanged="TransCollectionView_SelectionChanged"   x:Name="TransCollectionView" SelectionMode="Single" >
-                            <CollectionView.EmptyView>
-                                <StackLayout>
-                                    <lottie:AnimationView AutoPlay="True"  Animation="notfound.json" RepeatCount="200" RepeatMode="Restart" WidthRequest="150" HeightRequest="150"/>
-                                    <Label Text="No Post yet" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                                </StackLayout>
-                            </CollectionView.EmptyView>
-                            
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout BackgroundColor="#F3F3F3">
-                                        <!--<Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="5">-->
+
+                
+                <!--<ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="True" WidthRequest="25" HeightRequest="25" Color="Orange" VerticalOptions="Center" HorizontalOptions="Center" />-->
+
+                <RefreshView IsRefreshing="{Binding IsRefreshing}" Grid.Row="1" Command="{Binding RefreshCommand}">
+                    <CollectionView  ItemsSource="{Binding Feeds}" SelectedItem="{Binding SelectFeed}"
+                                     x:Name="TransCollectionView" SelectionMode="None">
+                        <CollectionView.EmptyView>
+                            <StackLayout>
+                                <lottie:AnimationView AutoPlay="True"  Animation="notfound.json" RepeatCount="200" RepeatMode="Restart" WidthRequest="150" HeightRequest="150"/>
+                                <Label Text="Getting posts..." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout BackgroundColor="#F3F3F3">
+                                    <!--<Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="5">-->
                                     <StackLayout BackgroundColor="{AppThemeBinding Light=White, Dark=Black}" Margin="0,5">
-                                            <Grid ColumnDefinitions="Auto,*,Auto" Margin="15,10" ColumnSpacing="10" >
-                                                <Frame CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0" IsClippedToBounds="True" VerticalOptions="Start" BorderColor="{DynamicResource PrimaryColor}">
-                                                    <ffimageloading:CachedImage Source="{Binding postCategoryImage}" Aspect="Fill"  />
-                                                </Frame>
+                                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="15,10" ColumnSpacing="10" >
+                                            <Frame CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0" IsClippedToBounds="True" VerticalOptions="Start" BorderColor="{DynamicResource PrimaryColor}">
+                                                <ffimageloading:CachedImage Source="{Binding postCategoryImage}" Aspect="Fill"  />
+                                            </Frame>
 
-                                                <StackLayout Spacing="5" VerticalOptions="Center" Grid.Column="1">
+                                            <StackLayout Spacing="5" VerticalOptions="Center" Grid.Column="1">
                                                 <Label Text="{Binding postCategoryName}" FontFamily="BoldFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" />
-                                                <Label FontSize="14" FontFamily="LightFont" Text="{Binding date,Converter={StaticResource RelativeDateTimeConvertor}}" TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label FontSize="14" FontFamily="LightFont" Text="{Binding date,Converter={StaticResource RelativeDateTimeConvertor}}" TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                                                    <Label Text=" - " />
+                                                    <Label FontFamily="BoldFont" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="11">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="By" />
+                                                                <Span Text=" " />
+                                                                <Span Text="{Binding posterDetails.posterName}" />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
                                                 </StackLayout>
-                                            </Grid>
+                                            </StackLayout>
+                                        </Grid>
 
-                                            <ffimageloading:CachedImage Source="{Binding mediaUrl}" Aspect="Fill" HeightRequest="200" />
-
+                                        <ffimageloading:CachedImage Source="{Binding imageUrl}" Aspect="AspectFill" HeightRequest="{Binding ImageHight}" />
+                                        <Grid IsVisible="{Binding IsVideo}">
+                                            <Image Source="{Binding VidImage}" Aspect="AspectFill" HeightRequest="{Binding VHight}" />
+                                            <Label Text="&#xf144;" FontFamily="FontIcon" TextColor="White" FontSize="60" VerticalOptions="Center" HorizontalOptions="Center" />
+                                        </Grid>
+                                        <!--<Label Text="&#xf144;" IsVisible="{Binding IsVideo}" FontFamily="FontIcon" TextColor="{DynamicResource GrayColor}" FontSize="35" VerticalOptions="Center" HorizontalOptions="Center" />-->
+                                        <!--<mm:VideoView Source="{Binding videoUrl}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />-->
                                         <StackLayout Grid.Column="1" HorizontalOptions="Start" Margin="20,10,20,10" Spacing="20" Orientation="Horizontal">
                                             <StackLayout Orientation="Horizontal" Spacing="5">
 
@@ -108,32 +151,87 @@
                                                sk:Skeleton.IsBusy="{Binding IsBusy}"
 	                                            sk:Skeleton.BackgroundColor="#c6c6c5"/>
                                         </StackLayout>
-                                        </StackLayout>
-                                        
-                                        
                                     </StackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
+
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                                NumberOfTapsRequired="1"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:Pages.FeedViewModel}}, Path=ItemTapped}"		
+                                                CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
 
 
-                        </CollectionView>
-                    <!--</RefreshView>-->
-                </ScrollView>
+                    </CollectionView>
 
-                
+                </RefreshView>
 
-                <!--footer here-->
-                <!--<mi:MenuTabView Grid.Row="2" />-->
-                
-                <!--footer here-->
-                
             </Grid>
+ <!--footer here-->
+            <!--<pv:PancakeView HorizontalOptions="End" VerticalOptions="End" Margin="30" CornerRadius="40" Padding="15" BackgroundColor="{DynamicResource DangerColor}">
+                <ImageButton x:Name="create" Clicked="create_Clicked" BackgroundColor="Transparent">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MaterialIcons"
+                                 Color="White"
+                                 Glyph="&#x000f0415;" Size="30"/>
+                    </ImageButton.Source>
 
-            <xct:AvatarView HeightRequest="80" WidthRequest="80" HorizontalOptions="End" FontFamily="MaterialIcons" Text="&#x000f0415;" VerticalOptions="EndAndExpand" Margin="0,0,20,20" Color="{DynamicResource DangerColor}" TextColor="White">
-                <xct:AvatarView.GestureRecognizers>
-                    <TapGestureRecognizer x:Name="createPost" Tapped="createPost_Tapped" />
-                </xct:AvatarView.GestureRecognizers>
-            </xct:AvatarView>
+                </ImageButton>
+            </pv:PancakeView>-->
+
+
+            <pv:PancakeView HorizontalOptions="End" VerticalOptions="End" Margin="30" CornerRadius="40" Padding="15">
+                <pv:PancakeView.BackgroundGradientStops>
+                    <pv:GradientStopCollection>
+                        <pv:GradientStop Color="Red" Offset="0" />
+                        <pv:GradientStop Color="OrangeRed" Offset="1" />
+                    </pv:GradientStopCollection>
+                </pv:PancakeView.BackgroundGradientStops>
+                <behaviors:Expander Rotation="180" HorizontalOptions="Start" VerticalOptions="End">
+                    <behaviors:Expander.Header>
+                        <Image Rotation="180">
+                            <Image.Source>
+                                <FontImageSource FontFamily="MaterialIcons"
+                                 Color="White"
+                                 Glyph="&#x000f0415;" Size="30"/>
+                            </Image.Source>
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding Source={RelativeSource AncestorType={x:Type behaviors:Expander}}, Path=IsExpanded}" Value="True">
+                                    <Setter Property="Source" Value="close.png"  />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </behaviors:Expander.Header>
+                    <StackLayout Spacing="30" Margin="0,20">
+                        <StackLayout Rotation="180">
+                            <Label FontFamily="MaterialIcons" Text="&#x000f0134;" FontSize="38"  TextColor="White" />
+                            <Label FontFamily="LightFont" Text="Mark" FontSize="11"  TextColor="White" HorizontalOptions="Center" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="mark" Tapped="mark_Tapped" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Rotation="180">
+                            <Label FontFamily="MaterialIcons" Text="&#x000f0114;" TextColor="White" FontSize="38" />
+                            <Label FontFamily="LightFont" Text="Give" FontSize="11"  TextColor="White" HorizontalOptions="Center" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="give" Tapped="give_Tapped" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Rotation="180">
+                            <Label FontFamily="MaterialIcons" Text="&#x000f0415;" TextColor="White" FontSize="38" />
+                            <Label FontFamily="LightFont" Text="Post" FontSize="11"  TextColor="White" HorizontalOptions="Center" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="post" Tapped="create_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        
+                    </StackLayout>
+                </behaviors:Expander>
+            </pv:PancakeView>
         </Grid>
         
     </ContentPage.Content> 

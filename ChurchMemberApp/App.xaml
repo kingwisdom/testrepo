@@ -3,6 +3,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--<Color x:Key="PrimaryColor">#BE2623</Color>-->
+            <Color x:Key="PrimaryColor">#fb2056</Color>
             <Color x:Key="DarkColor">#0D3745</Color>
             <Color x:Key="GrayColor">#0D374570</Color>
             <Color x:Key="DangerColor">#BE2623</Color>

@@ -26,6 +26,17 @@ namespace ChurchMemberApp.Views.Pages
             model = new FeedDetailViewModel(feed);
             this.BindingContext = model;
         }
+        public FeedDetailPage(string pushtitle, string pushdate, string pushdetails)
+        {
+            InitializeComponent();
+            var Feed = new Feeds()
+            {
+                title = pushtitle,
+                content = pushdetails
+            };
+            model = new FeedDetailViewModel(Feed);
+            this.BindingContext = model;
+        }
 
         private void back_Tapped(object sender, EventArgs e)
         {

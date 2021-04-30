@@ -1,78 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" x:Class="ChurchMemberApp.Views.Giving.AddPaymentMethodPage" x:Name="med">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"  Shell.PresentationMode="ModalAnimated" x:Class="ChurchMemberApp.Views.Giving.AddPaymentMethodPage" x:Name="med">
     <ContentPage.Content>
         <Grid RowDefinitions="120,*,Auto">
             <Image Source="header.jpeg" Aspect="Fill" WidthRequest="300" />
             <BoxView BackgroundColor="Black" Opacity="0.5" />
             <StackLayout Orientation="Horizontal" Margin="10,20,0,0" Spacing="20">
-                <Label Text="&#xf060;" FontFamily="FontIcon" FontSize="20" TextColor="White" />
-                <Label Grid.Row="0" VerticalOptions="Start" TextColor="White" FontFamily="MediumFont" Text="ADD PAYMENT OPTION" FontSize="18" />
+                <Label Text="&#xf060;" FontFamily="FontIcon" FontSize="20" TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" NumberOfTapsRequired="1" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Row="0" VerticalOptions="Start" TextColor="White" FontFamily="MediumFont" Text="CHOOSE PAYMENT METHOD" FontSize="18" />
             </StackLayout>
             
             <StackLayout Grid.Row="1" Margin="20,20,20,0">
-                <StackLayout>
-                    <Label Text="CARD NUMBER" FontFamily="MediumFont" />
-                    <Frame BorderColor="Gray" HeightRequest="40" Padding="10,0">
-                        <Entry Keyboard="Numeric" />
-                    </Frame>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" Spacing="30" Margin="0,15,0,0">
-                    <StackLayout>
-                        <Label Text="EXP DATE" FontFamily="MediumFont" />
-                        <Frame BorderColor="Gray" HeightRequest="40" Padding="10,0" WidthRequest="150">
-                            <Entry  />
-                        </Frame>
-                    </StackLayout>
 
-                    <StackLayout>
-                        <Label Text="CVV" FontFamily="MediumFont" />
-                        <Frame BorderColor="Gray" HeightRequest="40" Padding="10,0" WidthRequest="150">
-                            <Entry IsPassword="True" />
-                        </Frame>
-                    </StackLayout>
 
-                </StackLayout>
-
-                <Button Style="{StaticResource Buttons}" Text="ADD NEW CARD" Margin="0, 40,0,0" />
+                <Button Style="{StaticResource Buttons}" BackgroundColor="{DynamicResource DarkColor}" Text="PAYSTACK" Margin="0, 40,0,0" x:Name="paystack" Command="{Binding PaystackCommand}" />
+                
+                <!--<Button Style="{StaticResource Buttons}" BackgroundColor="Green" Text="FLUTER WAVE" Margin="0, 40,0,0" />
+                <Button Style="{StaticResource Buttons}" BackgroundColor="Orange" Text="PAYPAL" Margin="0, 40,0,0" />-->
             </StackLayout>
 
 
-            <Grid Grid.Row="2">
-                <pv:PancakeView BackgroundColor="White" HorizontalOptions="FillAndExpand" HeightRequest="50" CornerRadius="5,5,0,0">
-                    <StackLayout Orientation="Horizontal" Spacing="30" Margin="20,10">
-
-                        <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf015;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="home" Tapped="home_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
-
-                        <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf144;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="media" Tapped="media_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
-
-                        <Frame x:Name="active" Padding="10,5" TranslationX="-70" BackgroundColor="#FFeee3" IsClippedToBounds="True" CornerRadius="15" HeightRequest="35" WidthRequest="80" HasShadow="False">
-                            <StackLayout Orientation="Horizontal" Margin="2">
-                                <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf0d6;" FontFamily="FontIcon"  />
-                                <Label Text="Media" FontFamily="MediumFont" HorizontalOptions="Center" TextColor="{DynamicResource PrimaryColor}"  FontSize="14"/>
-                            </StackLayout>
-                        </Frame>
-
-
-
-
-                        <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf086;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon"  />
-                        <Label TextColor="{DynamicResource PrimaryColor}" Text="&#xf007;" VerticalOptions="Center" FontSize="24" FontFamily="FontIcon">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="profile" Tapped="profile_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
-
-                    </StackLayout>
-                </pv:PancakeView>
-            </Grid>
+           
         </Grid>
     </ContentPage.Content>
 </ContentPage>

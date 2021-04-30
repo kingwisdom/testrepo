@@ -1,6 +1,7 @@
 ﻿using ChurchMemberApp.Models.Response;
 using ChurchMemberApp.Platform;
 using ChurchMemberApp.Views.Media;
+using ChurchMemberApp.Views.Media.Downloads.Audio;
 using MediaManager;
 using MediaManager.Library;
 using System;
@@ -47,7 +48,20 @@ namespace ChurchMemberApp.ViewModel.Media
             CrossMediaManager.Current.StateChanged += Current_StateChanged;
             Duration = 1000;
             _instance = this;
-            MessagingCenter.Subscribe<MediaDetailPage, ChurchMedia>(this, "Stream", (sender, args) =>
+            MessagingCenter.Subscribe<MediaViewModel, ChurchMedia>(this, "Stream", (sender, args) =>
+            {
+                
+                IsBusy = true;
+                App.TobeStreamed = args;
+                var medi = new MediaItem(args.filePath)
+                {
+                    Title = args.name,
+                    Artist = args.name
+                };
+                StreamAudiofile(medi);
+            });
+
+            MessagingCenter.Subscribe<AudioList, ChurchMedia>(this, "Stream", (sender, args) =>
             {
                 
                 IsBusy = true;
@@ -96,7 +110,7 @@ namespace ChurchMemberApp.ViewModel.Media
             {
                 return new Command(async () =>
                 {
-                    await CrossMediaManager.Current.PlayNext();
+                    await CrossMediaManager.Current.SeekTo(TimeSpan.FromSeconds(5));
                 });
             }
         }
@@ -107,6 +121,16 @@ namespace ChurchMemberApp.ViewModel.Media
                 return new Command(async () =>
                 {
                     await CrossMediaManager.Current.Pause();
+                });
+            }
+        }
+        public ICommand StopCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    await CrossMediaManager.Current.Stop();
                 });
             }
         }
@@ -203,8 +227,6 @@ namespace ChurchMemberApp.ViewModel.Media
             }
             catch (Exception)
             {
-
-
             }
 
         }

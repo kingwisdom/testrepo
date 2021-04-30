@@ -4,7 +4,7 @@
              x:Class="ChurchMemberApp.Views.Media.MediaDetailPage" NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <FontImage x:Key="BackIcon" FontFamily="FontIcon" Glyph='&#xf019;' Size="20" Color="White" />
+            <FontImage x:Key="BackIcon" FontFamily="FontIcon" Glyph='&#xf019;' Size="16" Color="White" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>

@@ -14,11 +14,11 @@ namespace ChurchMemberApp.Views.Media
             InitializeComponent();
             
         }
-        
+        ChurchMedia model;
         public PlayVideoPage(ChurchMedia media)
         {
             InitializeComponent();
-
+            model = media;
             Init(media);
            // CrossMediaManager.Current.Play(media.imagePath);
            
@@ -36,7 +36,7 @@ namespace ChurchMemberApp.Views.Media
 
         private void play_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new VLCPage(videoPath.Text));
+            Navigation.PushModalAsync(new VLCPage(model));
         }
 
         private void back_Tapped(object sender, EventArgs e)

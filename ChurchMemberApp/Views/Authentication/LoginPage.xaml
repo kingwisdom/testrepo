@@ -3,7 +3,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="InvalidEntryStyle" TargetType="Entry">
-                <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource DangerColor}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -43,7 +43,7 @@
 
             <StackLayout>
                 <Label Text="Password" FontFamily="MediumFont"  TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="16" />
-                <Entry x:Name="pass" Placeholder="Your Password" TextColor="{AppThemeBinding Light=White, Dark=Black}" Text="{Binding Password}" />
+                <Entry x:Name="pass" Placeholder="Your Password" IsPassword="True" TextColor="{AppThemeBinding Light=Black, Dark=White}" Text="{Binding Password}" />
                 <BoxView HeightRequest="1" BackgroundColor="Gray">
                     <BoxView.Triggers>
                         <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference pass}, Path=IsFocused}" Value="True">
@@ -55,6 +55,11 @@
 
             <Button Style="{StaticResource Buttons}" Text="LOG IN" Margin="0,30,0,20" x:Name="login" Command="{Binding LoginCommand}" />
 
+            <Label Text="Forgot Password?" TextColor="{DynamicResource DarkColor}" FontFamily="BoldFont" HorizontalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="forgot" Tapped="forgot_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
             <Label HorizontalTextAlignment="Center" FontFamily="MediumFont">
                 <Label.FormattedText>
                     <FormattedString>

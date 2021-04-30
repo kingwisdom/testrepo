@@ -1,28 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:ChurchMemberApp.Converters" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:local="clr-namespace:ChurchMemberApp.Renderer" xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:ChurchMemberApp.Converters" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:local="clr-namespace:ChurchMemberApp.Renderer" xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" xmlns:anim="clr-namespace:Xamanimation;assembly=Xamanimation"
              x:Class="ChurchMemberApp.Views.Pages.FeedDetailPage" NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
             <FontImage x:Key="MoreIcon" FontFamily="FontIcon" Glyph='&#xf141;' Size="20" Color="Black" />
             <converter:RelativeDateTimeConvertor x:Key="RelativeDateTimeConvertor"/>
         </ResourceDictionary>
+
+        
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-        <Grid RowDefinitions="Auto,Auto">
-                <Image Source="{Binding Feed.mediaUrl}" Aspect="Fill" WidthRequest="300" HeightRequest="300" />
-            <!--<BoxView BackgroundColor="Black" Opacity="0.5" />-->
-                <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="{AppThemeBinding Light=Black, Dark=White}" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
-                </Label.GestureRecognizers>
-            </Label>
-            <StackLayout Grid.Row="1" Margin="20,0">
-                <ScrollView HorizontalScrollBarVisibility="Never">
-                    <StackLayout Spacing="20">
-                        <StackLayout Orientation="Horizontal" Spacing="15">
-                            <Label FontFamily="FontIcon" Text="&#xf004;" TextColor="{Binding likeColor}" FontSize="18" VerticalTextAlignment="Center">
+            <ScrollView HorizontalScrollBarVisibility="Never">
+                <ScrollView.Behaviors>
+                    <anim:ScrollViewScrollBehavior x:Name="Scroll" />
+                </ScrollView.Behaviors>
+                <Grid RowDefinitions="Auto,Auto">
+                    <Image Source="{Binding Feed.mediaUrl}" Aspect="AspectFill" WidthRequest="300" HeightRequest="{Binding imgHeight}" />
+
+                    <Label Text="&#xf053;" FontFamily="FontIcon" FontSize="20" TextColor="{DynamicResource PrimaryColor}" VerticalOptions="Start" VerticalTextAlignment="Start" Margin="20,5,0,10">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="back" Tapped="back_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <StackLayout Grid.Row="1" Margin="20,0">
+
+                        <StackLayout Spacing="20">
+                            <StackLayout Orientation="Horizontal" Spacing="15">
+                                <Label FontFamily="FontIcon" Text="&#xf004;" TextColor="{Binding likeColor}" FontSize="18" VerticalTextAlignment="Center">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding LikedCommand}" />
                                     </Label.GestureRecognizers>
@@ -35,32 +41,32 @@
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <Label Text="{Binding Feed.shareCount}" FontFamily="MediumFont" VerticalTextAlignment="Center" FontSize="12" />
-                        </StackLayout>
-                        <Label Text="{Binding Feed.date,Converter={StaticResource RelativeDateTimeConvertor}}" TextColor="DarkGray" FontSize="14" FontFamily="MediumFont" />
+                            </StackLayout>
+                            <Label Text="{Binding Feed.date,Converter={StaticResource RelativeDateTimeConvertor}}" TextColor="DarkGray" FontSize="14" FontFamily="MediumFont" />
 
                             <local:CustomLabel TextColor="{AppThemeBinding Light=Black, Dark=White}"  FontFamily="LightFont" XAlign="Start" LineBreakMode="WordWrap">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding Feed.title}" FontAttributes="Bold" />
-                                    <Span Text="&#10;" />
-                                    <Span Text="{Binding Feed.content}" LineHeight="1.0"   />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </local:CustomLabel>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Feed.title}" FontAttributes="Bold" />
+                                        <Span Text="&#10;" />
+                                        <Span Text="{Binding Feed.content}" LineHeight="1.0"   />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </local:CustomLabel>
 
 
-                        <Label TextColor="Black" HorizontalOptions="Center">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Comments" FontFamily="BoldFont" FontSize="18"/>
-                                    <Span Text=" " />
-                                    <Span Text="(" />
-                                    <Span Text="{Binding Feed.CommentCount}" />
+                            <Label TextColor="Black" HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Comments" FontFamily="BoldFont" FontSize="18"/>
+                                        <Span Text=" " />
+                                        <Span Text="(" />
+                                        <Span Text="{Binding Feed.CommentCount}" />
                                         <Span Text=")" />
                                     </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <BoxView HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="Center" WidthRequest="{Binding Height}" Margin="0,-20,0,0"  />
+                                </Label.FormattedText>
+                            </Label>
+                            <BoxView HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="Center" WidthRequest="{Binding Height}" Margin="0,-20,0,0"  />
                             <RefreshView IsRefreshing="{Binding IsRefreshing,Mode=OneWay}" Command="{Binding RefreshCommand}">
                                 <CollectionView ItemsSource="{Binding Feed.comments}" MinimumHeightRequest="50" HeightRequest="350">
                                     <CollectionView.ItemsLayout>
@@ -89,9 +95,12 @@
                                 </CollectionView>
                             </RefreshView>
                         </StackLayout>
-                </ScrollView>
-            </StackLayout>
-            </Grid>
+
+                    </StackLayout>
+
+
+                </Grid>
+            </ScrollView>
             <StackLayout VerticalOptions="EndAndExpand" HeightRequest="60">
                 <pv:PancakeView BackgroundColor="White" CornerRadius="10,10,0,0">
                     <pv:PancakeView.Shadow>
@@ -110,7 +119,7 @@
                     </Frame>
                 </pv:PancakeView>
             </StackLayout>
-        
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

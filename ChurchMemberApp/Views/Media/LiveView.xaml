@@ -1,41 +1,184 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ChurchMemberApp.Views.Media.LiveView">
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms" xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit" x:Class="ChurchMemberApp.Views.Media.LiveView">
     <ContentView.Content>
-        <StackLayout>
+
+        <Grid>
+            <Grid RowDefinitions="Auto,Auto">
+                <!--<Label Text="&#xf053;" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontSize="18" FontFamily="FontIcon" Margin="15,25,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="back" Tapped="back_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>-->
+                <BoxView WidthRequest="180" HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="End" />
+                <WebView Grid.Row="1" x:Name="webView" WidthRequest="1000" HeightRequest="700" Margin="0,-150,0,0" />
+                <ActivityIndicator Color="{DynamicResource PrimaryColor}" IsRunning="True" IsVisible="True" x:Name="loading" Grid.Row="1" VerticalOptions="Center" />
+                <!--<CollectionView Grid.Row="1" ItemsSource="{Binding V}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="video" SelectionChanged="video_SelectionChanged" Margin="0,230,0,0" BackgroundColor="White">
+                    <CollectionView.EmptyViewTemplate>
+                        <DataTemplate>
+                            <Label FontFamily="LightFont" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Empty messages" />
+                        </DataTemplate>
+                    </CollectionView.EmptyViewTemplate>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout 
+                                    Orientation="Vertical" HorizontalItemSpacing="10" VerticalItemSpacing="10" Span="2" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="Auto,Auto,Auto">
+                                <pv:PancakeView CornerRadius="20,20,20,20" WidthRequest="180" HeightRequest="150">
+                                    <ffimageloading:CachedImage  Source="{Binding MediumThumbnailUrl}" Aspect="AspectFill"  />
+                                </pv:PancakeView>
+                                <Image Source="{Binding MediaIcon}" WidthRequest="20" HeightRequest="20" Margin="0,-40,0,0" HorizontalOptions="Start" />
+
+                                <Label Grid.Row="1" Text="{Binding Title}" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="MediumFont" Margin="10,0" />
+                                <Label Grid.Row="2" Text="{Binding Description}" LineBreakMode="TailTruncation" TextColor="#FF7A1F" FontFamily="MediumFont" Margin="10,0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>-->
+                <Grid Grid.Row="1" BackgroundColor="White" Margin="0,300,0,0">
+                    <StackLayout Margin="0,15,0,0">
+                        <Label Text="Watch more videos on our social media platforms" FontSize="14" FontFamily="LightFont" TextColor="Black" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                            <StackLayout>
+                                <Image Source="https://live.staticflickr.com/3323/3606295240_51f643dd5d_b.jpg" WidthRequest="50" HeightRequest="50" />
+                                <Label FontFamily="MediumFont" Text="Youtube" HorizontalOptions="Center" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="1">
+                                <Image Source="https://i.pinimg.com/736x/d5/18/ec/d518eceea19f4b1a2ee032ddc634dd7d.jpg" WidthRequest="50" HeightRequest="50" />
+                                <Label FontFamily="MediumFont" Text="Facebook" HorizontalOptions="Center" />
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+            <pv:PancakeView HorizontalOptions="End" VerticalOptions="End" Margin="30" CornerRadius="40" Padding="15">
+                <pv:PancakeView.BackgroundGradientStops>
+                    <pv:GradientStopCollection>
+                        <pv:GradientStop Color="Red" Offset="0" />
+                        <pv:GradientStop Color="OrangeRed" Offset="1" />
+                    </pv:GradientStopCollection>
+                </pv:PancakeView.BackgroundGradientStops>
+                <behaviors:Expander Rotation="180" HorizontalOptions="Start" VerticalOptions="End">
+                    <behaviors:Expander.Header>
+                        <Image Rotation="180">
+                            <Image.Source>
+                                <FontImageSource FontFamily="MaterialIcons"
+                                 Color="White"
+                                 Glyph="&#x000f0415;" Size="30"/>
+                            </Image.Source>
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image"
+                                             Binding="{Binding Source={RelativeSource AncestorType={x:Type behaviors:Expander}}, Path=IsExpanded}" Value="True">
+                                    <Setter Property="Source" Value="close.png"  />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </behaviors:Expander.Header>
+                    <StackLayout Spacing="30" Margin="0,20">
+                        <StackLayout Rotation="180">
+                            <Label FontFamily="MaterialIcons" Text="&#x000f0134;" FontSize="38"  TextColor="White" />
+                            <Label FontFamily="LightFont" Text="Mark" FontSize="11"  TextColor="White" HorizontalOptions="Center" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="mark" Tapped="mark_Tapped" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Rotation="180">
+                            <Label FontFamily="MaterialIcons" Text="&#x000f0114;" TextColor="White" FontSize="38" />
+                            <Label FontFamily="LightFont" Text="Give" FontSize="11"  TextColor="White" HorizontalOptions="Center" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="give" Tapped="give_Tapped" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Rotation="180">
+                            <Label FontFamily="MaterialIcons" Text="&#x000f0415;" TextColor="White" FontSize="38" />
+                            <Label FontFamily="LightFont" Text="Post" FontSize="11"  TextColor="White" HorizontalOptions="Center" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="post" Tapped="post_Tapped" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                    </StackLayout>
+                </behaviors:Expander>
+            </pv:PancakeView>
+        </Grid>
+        <!--<StackLayout>
             <BoxView WidthRequest="180" HeightRequest="2" BackgroundColor="{DynamicResource PrimaryColor}" HorizontalOptions="End" />
 
             <Label Text="Watch On Demand" FontFamily="BoldFont" FontSize="18" Margin="0,20,0,0" />
-            <Label Text="Join Us For Worship And Sermon" FontFamily="LightFont" FontSize="14" TextColor="Black" />
+            <Label Text="Join Us For Worship And Sermon" FontFamily="LightFont" FontSize="14" TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
             <Grid VerticalOptions="Start" Margin="0,20,0,0">
-                <Frame CornerRadius="20" Padding="0" WidthRequest="300" HeightRequest="200" IsClippedToBounds="True" HasShadow="False">
-                    <Image Source="https://dailypost.ng/wp-content/uploads/2020/05/David-Ibiyeomie.jpg" Aspect="Fill" /> 
+                <Frame CornerRadius="20" Padding="0" WidthRequest="300" HeightRequest="400" IsClippedToBounds="True" HasShadow="False">
+                    --><!--<shared:MediaPlayerElement x:Name="mymedia" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />--><!--
+                    <Grid>
+                        <BoxView BackgroundColor="Black" />
+                        <Label Text="&#xf04b;" TextColor="White" FontFamily="FontIcon" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" x:Name="play" Tapped="play_Tapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
                 </Frame>
                 <Frame BackgroundColor="{DynamicResource PrimaryColor}" CornerRadius="15" WidthRequest="60" HeightRequest="20" Margin="0,10,10,0" HorizontalOptions="End" VerticalOptions="Start" Padding="5">
-                        <Label Text="LIVE" FontFamily="LightFont" HorizontalOptions="Center" TextColor="White" />
+                    <Label Text="LIVE" FontFamily="LightFont" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </Frame>
             </Grid>
 
             <Grid ColumnDefinitions="Auto,*" Margin="0,20,0,0">
                 <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                    <Label TextColor="Black" Text="Faith that works" FontFamily="MediumFont" FontSize="18" LineBreakMode="WordWrap" />
-                    <Label Text="Pastor A.O Akinosun" TextColor="#F55A00" FontFamily="MediumFont" FontSize="14" />
+                    <Label TextColor="Black" x:Name="title" FontFamily="MediumFont" FontSize="18" LineBreakMode="WordWrap" />
+                    <Label Text="" x:Name="pastor" TextColor="#F55A00" FontFamily="MediumFont" FontSize="14" />
                 </StackLayout>
 
-                <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Center">
-                    <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
-                        <Label Text="&#xf004;" FontFamily="FontIcon" TextColor="Red" VerticalOptions="Center" HorizontalOptions="Center" />
-                    </Frame>
+                <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                    <Grid ColumnDefinitions="Auto,*" Margin="0,20">
+                        <Label  Text="Video" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontFamily="BoldFont" FontSize="20" />
+                        <Label Grid.Column="1" Text="See All" FontFamily="MediumFont" FontSize="16" HorizontalOptions="End" TextColor="{DynamicResource DangerColor}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SeeAllVideoCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
 
-                    <Frame HasShadow="False" CornerRadius="10" Padding="10" BackgroundColor="#F1E4E4">
-                        <Label Text="&#xf019;" FontFamily="FontIcon" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
-                    </Frame>
+                    <ActivityIndicator Color="Orange" WidthRequest="50" HeightRequest="50" IsRunning="True" IsVisible="{Binding IsBusy}" />
+                    <CollectionView ItemsSource="{Binding Video}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="videofeeds" SelectionChanged="videofeeds_SelectionChanged">
+                        <CollectionView.EmptyView>
+                            <Label FontFamily="LightFont" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="No Videos Yet!" />
+
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout 
+                                    Orientation="Vertical" HorizontalItemSpacing="10" VerticalItemSpacing="10" Span="2" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+                                    <pv:PancakeView CornerRadius="20,20,20,20" WidthRequest="180" HeightRequest="150">
+                                        <ffimageloading:CachedImage  Source="{Binding DefaultThumbnailUrl}" Aspect="AspectFill"  />
+                                    </pv:PancakeView>
+                                    <Image Source="{Binding MediaIcon}" WidthRequest="20" HeightRequest="20" Margin="0,-40,0,0" HorizontalOptions="Start" />
+
+                                    <Label Grid.Row="1" Text="{Binding Title}" TextColor="Black" FontFamily="MediumFont" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                    <Label Grid.Row="2" Text="{Binding Description}" TextColor="#FF7A1F" FontFamily="MediumFont" Margin="10,0"/>
+                                    <Label Grid.Row="2" Text="{Binding  PublishedAt, StringFormat='{0:dd/MM/yyyy}'}" TextColor="#FF7A1F" FontFamily="MediumFont" Margin="10,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+
+
+
                 </StackLayout>
             </Grid>
 
-            <Label Text="Schedule" FontFamily="BoldFont" TextColor="Black" Margin="0,30,0,20" FontSize="20"/>
+            --><!--<Label Text="Schedule" FontFamily="BoldFont" TextColor="Black" Margin="0,30,0,20" FontSize="20"/>--><!--
             
-        </StackLayout>
+        </StackLayout>-->
         
     </ContentView.Content>
 </ContentView>

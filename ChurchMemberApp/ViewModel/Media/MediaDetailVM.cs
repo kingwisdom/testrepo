@@ -15,7 +15,6 @@ namespace ChurchMemberApp.ViewModel.Media
         }
 
         private ChurchMedia _church;
-
         public ChurchMedia ChurchMedia
         {
             get { return _church; }

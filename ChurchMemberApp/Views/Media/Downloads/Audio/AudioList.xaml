@@ -24,12 +24,9 @@
 
 
                     <StackLayout Margin="20,0">
+                        <Label  Text="Downloads" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
 
-
-                            <Label  Text="Downloads" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
-                            
-
-                        <CollectionView ItemsSource="{Binding AllAudio}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="audio" SelectionChanged="audio_SelectionChanged">
+                        <CollectionView ItemsSource="{Binding AllMedia}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="audio" SelectionChanged="audio_SelectionChanged">
                             <CollectionView.EmptyViewTemplate>
                                 <DataTemplate>
                                     <Label FontFamily="LightFont" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Empty messages" />

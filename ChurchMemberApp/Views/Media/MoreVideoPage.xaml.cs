@@ -22,7 +22,7 @@ namespace ChurchMemberApp.Views.Media
 
         private async void videofeeds_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = new MediaDetailPage(e.CurrentSelection[0] as ChurchMedia);
+            var item = new VLCPage(e.CurrentSelection[0] as ChurchMedia);
             await Navigation.PushAsync(item);
         }
     }

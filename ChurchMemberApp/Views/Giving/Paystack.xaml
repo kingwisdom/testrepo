@@ -5,7 +5,7 @@
              x:Class="ChurchMemberApp.Views.Giving.Paystack">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Loading... please wait..." TextColor="White" FontSize="14" FontFamily="LightFont" x:Name="loading" Margin="0,40,0,0" HorizontalOptions="Center" />
+            <!--<Label Text="Loading... please wait..." TextColor="White" FontSize="14" FontFamily="LightFont" x:Name="loading" Margin="0,40,0,0" HorizontalOptions="Center" />-->
             <local:PaystackWebView x:Name="hybridWebView"  
                  HorizontalOptions="FillAndExpand" 
                  VerticalOptions="FillAndExpand"

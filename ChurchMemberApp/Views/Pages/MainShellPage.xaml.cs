@@ -17,5 +17,6 @@ namespace ChurchMemberApp.Views.Pages
             InitializeComponent();
             MessagingCenter.Send<MainShellPage>(this, "loadFeed");
         }
+        
     }
 }

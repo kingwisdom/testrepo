@@ -3,6 +3,7 @@ using ChurchMemberApp.Models.Response;
 using ChurchMemberApp.Services;
 using ChurchMemberApp.Views.Giving;
 using ChurchMemberApp.Views.Popups;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +24,7 @@ namespace ChurchMemberApp.ViewModel.Giving
             //OrderId = model.orderId;
             ContributionItems = new ObservableCollection<ContributionItem>(Payment.contributionItems);
             Gateways = new ObservableCollection<GateWay>(Payment.gateWays);
-
+            
         }
 
         private PaymentForm _pay;
@@ -49,7 +50,8 @@ namespace ChurchMemberApp.ViewModel.Giving
             get { return gatways; }
             set { gatways = value; }
         }
-
+        
+        
 
         private decimal amount;
 
@@ -59,9 +61,15 @@ namespace ChurchMemberApp.ViewModel.Giving
             set { amount = value; OnPropertyChanged(); }
         }
 
-
-        public ICommand PayCommand => new Command(async () =>
+        public ICommand PayOptionCommand => new Command(async () =>
         {
+            await App.Current.MainPage.Navigation.PushAsync(new AddPaymentMethodPage(Payment));
+        });
+
+        [Obsolete]
+        public ICommand PaystackCommand => new Command(async () =>
+        {
+            await PopupNavigation.PushAsync(new Indicator());
             decimal total = 0;
             List<Contribution> fa = new List<Contribution>();
             foreach (var item in ContributionItems)
@@ -79,7 +87,6 @@ namespace ChurchMemberApp.ViewModel.Giving
                total = total + item.Amount;
             };
             var response = fa.Sum(er => er.amount);
-
             DonationRequest donation = new DonationRequest()
             {
                 name = Payment.name,
@@ -94,6 +101,7 @@ namespace ChurchMemberApp.ViewModel.Giving
             };
 
             var req = await ApiServices.PostPaymentRequest(donation);
+            //call paystack and services at the same time
             if (req)
             {
                await App.Current.MainPage.Navigation.PushModalAsync(new Paystack(response, Payment));
@@ -132,13 +140,13 @@ namespace ChurchMemberApp.ViewModel.Giving
                 tenantID = App.AppKey,
                 phone = "",
                 paymentFormId = Payment.id,
-                isAnonymous = true,
+                isAnonymous = string.IsNullOrWhiteSpace(Preferences.Get("token", string.Empty)) ? true : false,
                 contributionItems = fa.ToList(),
                 currencyId = Payment.currencyId
             };
 
-            var req = await ApiServices.PostConfirmDonation(donation);
-            if (req)
+            await ApiServices.PostConfirmDonation(donation);
+            if (true)
             {
                 //MessageDialog.Show("", "Thank you for your payment", "ok");
                 //await App.Current.MainPage.Navigation.PushModalAsync(new Paystack(response, Payment));
@@ -148,6 +156,8 @@ namespace ChurchMemberApp.ViewModel.Giving
                 //await App.Current.MainPage.DisplayAlert("", "There is a problem, please try again", "Yes");
             }
         });
+
+        //token
 
     }
 }

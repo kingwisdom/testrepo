@@ -16,6 +16,7 @@ namespace ChurchMemberApp.Models.Response
         public List<Pastor> pastors { get; set; }
         public List<Bank> banks { get; set; }
         public string churchAppBackgroundColor { get; set; }
+        public object banner { get; set; }
     }
 
     public class About
@@ -30,7 +31,6 @@ namespace ChurchMemberApp.Models.Response
         public string socialMediaId { get; set; }
         public string name { get; set; }
         public string url { get; set; }
-
         public string owner { get; set; }
     }
 
@@ -47,11 +47,13 @@ namespace ChurchMemberApp.Models.Response
 
     public class Bank
     {
-        public string bankId { get; set; }
+        public string id { get; set; }
+        public string bankID { get; set; }
         public string bankName { get; set; }
         public string accountName { get; set; }
         public string accountNumber { get; set; }
         public string bankLogoUrl { get; set; }
         public string tenantID { get; set; }
+        public object bank { get; set; }
     }
 }

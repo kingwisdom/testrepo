@@ -2,10 +2,11 @@
 <pages:PopupPage  xmlns:pages="http://rotorgames.com" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChurchMemberApp.Views.Popups.Picturepopup">
-    
-        <StackLayout HeightRequest="300" WidthRequest="300" BackgroundColor="White" Padding="10" HorizontalOptions="Center" VerticalOptions="Center">
-            <Image Source="{Binding Picture}" x:Name="image" HeightRequest="250" Aspect="AspectFill"/>
-            <ImageButton BackgroundColor="Transparent" Source="photograph"  Command="{Binding Takepicture}" VerticalOptions="End"/>
-        </StackLayout>
-    
+    <Grid>
+        <Frame HeightRequest="400" WidthRequest="400" BackgroundColor="White" Padding="5" HorizontalOptions="Center" VerticalOptions="Center">
+            <Image x:Name="image" HeightRequest="250" Aspect="AspectFill"/>
+        </Frame>
+        <Button Text="Cancel" Margin="0,20,0,0" Style="{StaticResource Buttons}" BackgroundColor="White" TextColor="Black" HorizontalOptions="Center" Clicked="Button_Clicked" VerticalOptions="End" />
+    </Grid>
+
 </pages:PopupPage>

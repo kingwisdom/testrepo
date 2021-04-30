@@ -1,4 +1,5 @@
 ﻿
+
 using ChurchMemberApp.Models;
 using ChurchMemberApp.Models.Request;
 using ChurchMemberApp.Models.Response;
@@ -23,34 +24,45 @@ namespace ChurchMemberApp.Services
         #region URLs
         static string v = "1";
         public static string basicUrl = "https://ecofaith.azurewebsites.net/";
-        public static string url = "https://ecofaith.azurewebsites.net/mobile/v" + v + "/";
-        //public static string url = "https://churchplusv3coreapi.azurewebsites.net/mobile/v" + v + "/";
+        //public static string url = "https://ecofaith.azurewebsites.net/mobile/v" + v + "/";
+        public static string url = "https://churchplusv3coreapi.azurewebsites.net/mobile/v" + v + "/";
 
-        private static string appkey = Preferences.Get("tenantId", string.Empty);
+        private static string appkey = App.AppKey;
 
         private static string GetChurches = $"{url}MobileOnboarding/Onboard";
 
         private static string RegisterUser = $"{url}Account/SignUp";
         private static string userLogin = $"{url}Account/SignIn";
+        private static string forgotpasswordurl = $"{url}Account/ForgotPassword/";
+        private static string updatepasswordurl = $"{url}Account/ResetPassword";
+        private static string URL = $"{url}Account/CheckData";
+        private static string syncData = $"{url}Account/SyncData";
+
+
+        private static string updateuserUrl = $"{url}Account/UpdateAccount";
 
         private static string getfeedsUrl = $"{url}MobileOnboarding/GetChurchFeed?TenantId=";
 
         private static string getpostcategoryUrl = $"{url}Feeds/GetPostCategory?TenantId={appkey}";
-        private static string createpostUrl = $"{url}Feeds/CreatePost";
+        private static string createpostUrl = $"{url}Feeds/CreateMobilePost";
         private static string createcommentUrl = $"{url}Feeds/Comment";
 
         private static string likepostUrl = $"{url}Feeds/LikePost";
         private static string sharepostUrl = $"{url}Feeds/SharePost?PostId=";
         private static string churchprofileUrl = $"{url}MobileOnboarding/GetChurchProfile?TenantID=";
+
+
         
+
         private static string churchmediaUrl = $"{url}MobileMedia/GetAllMedia?TenantID={appkey}";
         private static string churchgroupsUrl = $"{url}Chat/GetGroupChats?TenantId={appkey}";
         private static string groupchatUrl = $"{url}Chat/GetAllMessages?TenantId={appkey}&GroupId=";
         private static string postchatUrl = $"{url}Chat/SendMessage";
 
-        private static string getpaymentformchatUrl = $"{url}PaymentForm/mobilePaymentForms?tenantId={appkey}";
+        private static string getpaymentformUrl = $"{url}PaymentForm/mobilePaymentForms?tenantId={appkey}";
         private static string postpaymentreqUrl = $"{basicUrl}donation";
         private static string postdonationreqUrl = $"{basicUrl}confirmDonation";
+        private static string contributionsUrl = $"{url}PaymentForm/contributions";
 
         //12efa63b-ae11-4e24-9b19-fb325d66442e
         #endregion
@@ -72,7 +84,7 @@ namespace ChurchMemberApp.Services
 
                 var response = await Policy
                .Handle<HttpRequestException>()
-               .WaitAndRetry(retryCount: 3, sleepDurationProvider: (attempt) => TimeSpan.FromSeconds(2))
+               .WaitAndRetry(retryCount: 3, sleepDurationProvider: (attempt) => TimeSpan.FromSeconds(4))
                .Execute(async () => await client.GetAsync(GetChurches));
                 HttpContent httpContent = response.Content;
 
@@ -91,19 +103,29 @@ namespace ChurchMemberApp.Services
         public static async Task<List<GetPostCategory>> GetAllPostCategory()
         {
 
-            HttpClient client = new HttpClient();
+            try
+            {
+                HttpClient client = new HttpClient();
 
-            TokenValidator.CheckTokenValidity();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", Preferences.Get("token", string.Empty));
-            var response = await client.GetAsync(getpostcategoryUrl);
+                TokenValidator.CheckTokenValidity();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", Preferences.Get("token", string.Empty));
+                var response = await client.GetAsync(getpostcategoryUrl);
 
-            HttpContent httpContent = response.Content;
+                HttpContent httpContent = response.Content;
 
-            var json = await httpContent.ReadAsStringAsync();
+                var json = await httpContent.ReadAsStringAsync();
+                
+                var church = JsonConvert.DeserializeObject<List<GetPostCategory>>(json);
 
-            var church = JsonConvert.DeserializeObject<List<GetPostCategory>>(json);
+                if(church != null)
+                    Preferences.Set("PostCategory", json);
+                return church;
+            }
+            catch (Exception r)
+            {
 
-            return church;
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Feeds>> GetAllChurchFeeds(string TenantId, string userId = "")
@@ -155,12 +177,27 @@ namespace ChurchMemberApp.Services
             }
             
         }
+
+        //church profile
         public static async Task<bool> GetProfile(string tenantId)
         {
             TokenValidator.CheckTokenValidity();
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", Preferences.Get("token", string.Empty));
             var response = await client.GetAsync(churchprofileUrl + tenantId);
+            if (!response.IsSuccessStatusCode) return false;
+            return true;
+        }
+
+        //update person info
+        public static async Task<bool> UpdateUserInfo(UpdateProfile req)
+        {
+            TokenValidator.CheckTokenValidity();
+            var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(req);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", Preferences.Get("token", string.Empty));
+            var response = await client.PutAsync(updateuserUrl, content);
             if (!response.IsSuccessStatusCode) return false;
             return true;
         }
@@ -206,8 +243,11 @@ namespace ChurchMemberApp.Services
                 HttpContent httpContent = response.Content;
 
                 var json = await httpContent.ReadAsStringAsync();
-                Preferences.Set("churchprofile", json);
+
+                
                 //var feeds = JsonConvert.DeserializeObject<IEnumerable<ChurchProfile>>(json);
+                //if(feeds != null)
+                    Preferences.Set("churchprofile", json);
 
                 return true;
             }
@@ -385,12 +425,15 @@ namespace ChurchMemberApp.Services
             try
             {
                 HttpClient client = new HttpClient();
-                var response = await client.GetAsync(getpaymentformchatUrl);
+                var response = await client.GetAsync(getpaymentformUrl);
 
                 HttpContent httpContent = response.Content;
                 var json = await httpContent.ReadAsStringAsync();
 
                 var groups = JsonConvert.DeserializeObject<List<PaymentForm>>(json);
+                if(groups != null)
+                    Preferences.Set("paymentForm",json);
+                
 
                 return groups;
             }
@@ -433,7 +476,31 @@ namespace ChurchMemberApp.Services
             }
             catch (Exception er)
             {
-                return true;
+                return false;
+            }
+            
+        }
+        public static async Task<List<UserContributionList>> GetContributionsTrasaction(ContributionsReq req)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var sers = JsonConvert.SerializeObject(req);
+                var content = new StringContent(sers, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", Preferences.Get("token", string.Empty));
+                var response = await client.PostAsync(contributionsUrl, content);
+                if (!response.IsSuccessStatusCode) return null;
+                HttpContent httpContent = response.Content;
+
+                var json = await httpContent.ReadAsStringAsync();
+                Preferences.Set("ContributionsItems", json);
+                var groups = JsonConvert.DeserializeObject<List<UserContributionList>>(json);
+
+                return groups;
+            }
+            catch (Exception er)
+            {
+                return null;
             }
             
         }
@@ -456,7 +523,6 @@ namespace ChurchMemberApp.Services
                 var responsecontent = JsonConvert.DeserializeObject<LoginResponse>(jsonResult);
                 return responsecontent;
 
-
             }
             catch (Exception ex)
             {
@@ -465,7 +531,7 @@ namespace ChurchMemberApp.Services
         }
 
 
-        public static async Task<RegisterResponse> Register(Register register)
+        public static async Task<ResponseObj> Register(Register register)
         {
             try
             {
@@ -476,7 +542,30 @@ namespace ChurchMemberApp.Services
                 if (!response.IsSuccessStatusCode) return null;
                 var jsonResult = await response.Content.ReadAsStringAsync();
 
-                var responsecontent = JsonConvert.DeserializeObject<RegisterResponse>(jsonResult);
+                var responsecontent = JsonConvert.DeserializeObject<ResponseObj>(jsonResult);
+                return responsecontent;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+        public static async Task<ResponseObj> ForgotPAssword(string email)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var json = JsonConvert.SerializeObject("");
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(forgotpasswordurl+email,content);
+                if (!response.IsSuccessStatusCode) return null;
+
+                var jsonResult = await response.Content.ReadAsStringAsync();
+
+                var responsecontent = JsonConvert.DeserializeObject<ResponseObj>(jsonResult);
                 return responsecontent;
 
 
@@ -488,7 +577,116 @@ namespace ChurchMemberApp.Services
 
         }
 
+        public static async Task<GetOTPResponse> GetOTP(string phone,string tenant)
+        {
+            try
+            {
+                var URL = $"{url}Account/SendOTP?PhoneNumber={phone}&TenantId={tenant}";
+                HttpClient client = new HttpClient();
+                var response = await client.GetAsync(URL);
+
+                HttpContent httpContent = response.Content;
+                var json = await httpContent.ReadAsStringAsync();
+
+                var g = JsonConvert.DeserializeObject<GetOTPResponse>(json);
+
+                return g;
+            }
+            catch (Exception c)
+            {
+
+                Debug.WriteLine(c.Message);
+            }
+            return null;
+        } 
+
+        public static async Task<PasswordOTPResponse> VerifyOTP(string otp, string email)
+        {
+            try
+            {
+               var passwordotpurl = $"{url}Account/ConfirmOTP?otp={otp}&email={email}";
+                var client = new HttpClient();
+                var json = JsonConvert.SerializeObject("");
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(passwordotpurl, content);
+                if (!response.IsSuccessStatusCode) return null;
+
+                var jsonResult = await response.Content.ReadAsStringAsync();
+
+                var responsecontent = JsonConvert.DeserializeObject<PasswordOTPResponse>(jsonResult);
+                return responsecontent;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+        public static async Task<ResponseObj> ChangePassword(ResetPassword pw)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var json = JsonConvert.SerializeObject(pw);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(updatepasswordurl, content);
+                if (!response.IsSuccessStatusCode) return null;
+                var jsonResult = await response.Content.ReadAsStringAsync();
+
+                var responsecontent = JsonConvert.DeserializeObject<ResponseObj>(jsonResult);
+                return responsecontent;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
         
+        public static async Task<CheckDataResponseObj> CheckData(CheckDataRequest req)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var json = JsonConvert.SerializeObject(req);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(URL, content);
+                if (!response.IsSuccessStatusCode) return null;
+                var jsonResult = await response.Content.ReadAsStringAsync();
+
+                var responsecontent = JsonConvert.DeserializeObject<CheckDataResponseObj>(jsonResult);
+                return responsecontent;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+        public static async Task<ResponseObj> SyncData(SyncDataResponse req)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var json = JsonConvert.SerializeObject(req);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(syncData, content);
+                if (!response.IsSuccessStatusCode) return null;
+                var jsonResult = await response.Content.ReadAsStringAsync();
+
+                var responsecontent = JsonConvert.DeserializeObject<ResponseObj>(jsonResult);
+                return responsecontent;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+        //1616742809
+
     }
 
 

@@ -14,6 +14,7 @@ namespace ChurchMemberApp.ViewModel.Contact
 {
     public class ChurchContactViewModel : BaseViewModel
     {
+        [Obsolete]
         public ChurchContactViewModel()
         {
             Profile = new ChurchProfile();
@@ -107,21 +108,29 @@ namespace ChurchMemberApp.ViewModel.Contact
             set { banks = value; }
         }
 
-
-
+        [Obsolete]
         public async void GetProfile()
         {
             await PopupNavigation.PushAsync(new Indicator());
 
             try
             {
-                var res = Preferences.Get("churchprofile", string.Empty);
-                if (Connectivity.NetworkAccess == NetworkAccess.Internet && string.IsNullOrEmpty(res))
+                await ApiServices.GetChurchProfile(App.AppKey);
+
+                try
                 {
-                    await ApiServices.GetChurchProfile(Preferences.Get("tenantId", string.Empty));
-                    return;
+                    var res = Preferences.Get("churchprofile", string.Empty);
+                    Profile = JsonConvert.DeserializeObject<ChurchProfile>(res);
                 }
-                Profile = JsonConvert.DeserializeObject<ChurchProfile>(res);
+                catch (Exception)
+                {
+                }
+                //if (Connectivity.NetworkAccess == NetworkAccess.Internet && string.IsNullOrEmpty(res))
+                //{
+                //    await ApiServices.GetChurchProfile(Preferences.Get("tenantId", string.Empty));
+                //    return;
+                //}
+               
                 ChurchName = Profile.churchName;
                 Logo = Profile.logo;
                 Email = Profile.email;

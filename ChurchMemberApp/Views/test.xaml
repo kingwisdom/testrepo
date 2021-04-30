@@ -1,11 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:forms="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
              x:Class="ChurchMemberApp.Views.test">
     <ContentPage.Content>
-        <StackLayout>
-            <WebView x:Name="yourWebView" Source="{Binding HtmlSource}"  WidthRequest="1000" HeightRequest="1000" />
-
-        </StackLayout>
+        <mm:VideoView x:Name="mymedia" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
     </ContentPage.Content>
 </ContentPage>

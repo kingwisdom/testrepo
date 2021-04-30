@@ -34,7 +34,7 @@ namespace ChurchMemberApp.Models
         public int viewCount { get; set; }
         public int downloadCount { get; set; }
         public int sortOrder { get; set; }
-        public double price { get; set; }
+        public double? price { get; set; }
         public string fileBlobName { get; set; }
         public string imageBlobName { get; set; }
         public bool isFree { get; set; }

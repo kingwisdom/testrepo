@@ -22,11 +22,8 @@
 
 
                         <Grid ColumnDefinitions="Auto,*" Margin="0,20">
-                            <Label  Text="Downloads" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
-                            <Label Grid.Column="1" Text="See All" FontFamily="MediumFont" FontSize="16" HorizontalOptions="End" TextColor="{DynamicResource DangerColor}">
-
-                            </Label>
-
+                            <Label  Text="All Video Messages" TextColor="#000" FontFamily="BoldFont" FontSize="20" />
+                           
                         </Grid>
 
                         <CollectionView ItemsSource="{Binding AllVideo}" HeightRequest="220" SelectionMode="Single" SelectedItem="{Binding SelectItem}" x:Name="videofeeds" SelectionChanged="videofeeds_SelectionChanged">

@@ -1,5 +1,6 @@
 ﻿using ChurchMemberApp.Models.Response;
 using ChurchMemberApp.Services;
+using ChurchMemberApp.Views.Media;
 using ChurchMemberApp.Views.Popups;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ChurchMemberApp.ViewModel.Media
-{
+{ 
     public class MediaViewModel : BaseViewModel
     {
         public MediaViewModel()
@@ -80,9 +81,35 @@ namespace ChurchMemberApp.ViewModel.Media
             set { _selectItem = value; }
         }
 
-        public ICommand SeeAllVideoCommand => new Command(() =>
+        public Command<ChurchMedia> PlayTapped => new Command<ChurchMedia>(async (media) =>
         {
+             if (media == null)
+                 return;
+             
+             await App.Current.MainPage.Navigation.PushAsync(new PlayAudioPage(media, "dd"));
+             MessagingCenter.Send(this, "Stream", media);
+         });
+        
+        public Command<ChurchMedia> PlayVideoTapped => new Command<ChurchMedia>(async (media) =>
+        {
+             if (media == null)
+                 return;
+             
+             await App.Current.MainPage.Navigation.PushAsync(new VLCPage(media));
+         });
 
+        public ICommand SeeAllCommand => new Command(async() =>
+        {
+            await App.Current.MainPage.Navigation.PushAsync(new MoreAudioPage());
+        });
+        public ICommand SeeAllVideoCommand => new Command(async() =>
+        {
+            await App.Current.MainPage.Navigation.PushAsync(new MoreVideoPage());
+        });
+        
+        public ICommand SeeAllBooksCommand => new Command(async() =>
+        {
+            await App.Current.MainPage.Navigation.PushAsync(new MoreBooksPage());
         });
         private async void DisplayMedia()
         {
